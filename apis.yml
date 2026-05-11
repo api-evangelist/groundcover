@@ -28,6 +28,30 @@ common:
     url: https://www.groundcover.com
   - type: Documentation
     url: https://docs.groundcover.com
+  - type: Integrations
+    url: https://www.groundcover.com/integrations
+integrations:
+  - name: groundcover
+  - name: Kubernetes
+  - name: OpenTelemetry
+  - name: Prometheus
+  - name: AWS S3 (Logs ingestion)
+  - name: Google Cloud Pub/Sub
+  - name: Microsoft Azure
+  - name: MongoDB Atlas
+  - name: Redis Cloud
+  - name: Datadog
+  - name: Istio
+  - name: FluentBit
+  - name: FluentD
+  - name: RabbitMQ
+  - name: Cloudflare
+  - name: GitHub
+  - name: OpenAI Codex
+  - name: Claude Code
+  - name: Claude Cowork
+  - name: OpenClaw
+  - name: AI & LLM Observability
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
