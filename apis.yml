@@ -24,6 +24,10 @@ apis:
       - type: Documentation
         url: https://docs.groundcover.com
 common:
+  - type: GitHubOrganization
+    url: https://github.com/groundcover-com
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/groundcover-com
   - type: Website
     url: https://www.groundcover.com
   - type: Documentation
