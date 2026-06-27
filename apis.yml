@@ -34,7 +34,7 @@ common:
     url: https://docs.groundcover.com
   - type: Integrations
     url: https://www.groundcover.com/integrations
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.groundcover.com/llms.txt
 integrations:
   - name: groundcover
