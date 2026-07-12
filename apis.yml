@@ -24,6 +24,10 @@ apis:
       - type: Documentation
         url: https://docs.groundcover.com
 common:
+  - type: TrustCenter
+    url: security/groundcover-trust-center.yml
+  - type: DomainSecurity
+    url: security/groundcover-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/groundcover-com
   - type: LinkedIn
@@ -36,6 +40,8 @@ common:
     url: https://www.groundcover.com/integrations
   - type: LlmsText
     url: https://docs.groundcover.com/llms.txt
+  - url: https://www.groundcover.com/blog
+    type: Blog
 integrations:
   - name: groundcover
   - name: Kubernetes
