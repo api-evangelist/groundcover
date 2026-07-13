@@ -1,0 +1,14 @@
+{
+  "repo": "groundcover",
+  "feeds": [
+    {
+      "source": "https://www.groundcover.com/blog",
+      "feed_url": "https://www.groundcover.com/blog/rss.xml",
+      "title": "",
+      "saved": 20,
+      "method": "discovered"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 29
+}
