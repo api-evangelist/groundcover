@@ -1,0 +1,297 @@
+# groundcover docs
+
+## docs
+
+- [Introduction](https://docs.groundcover.com/welcome/readme.md): groundcover is a full stack, cloud-native observability platform, developed to break all industry paradigms - from making instrumentation a thing of the past, to decoupling cost from data volumes
+- [FAQ](https://docs.groundcover.com/welcome/faq.md)
+- [Log Management](https://docs.groundcover.com/capabilities/log-management.md): Stream, store, and query your logs at any scale, for a fixed cost.
+- [Infrastructure Monitoring](https://docs.groundcover.com/capabilities/infrastructure-monitoring.md): Get complete visibility into your cloud infrastructure performance at any scale, easily access all your metrics in one place and optimize infrastructure efficiency.
+- [Application Performance Monitoring (APM)](https://docs.groundcover.com/capabilities/application-performance-monitoring-apm.md): Gain end-to-end observability into your applications performance, identify and resolve issues instantly - all with zero code changes.
+- [Application Metrics](https://docs.groundcover.com/capabilities/application-performance-monitoring-apm/application-metrics.md)
+- [Traces](https://docs.groundcover.com/capabilities/application-performance-monitoring-apm/traces.md)
+- [Supported Technologies](https://docs.groundcover.com/capabilities/application-performance-monitoring-apm/supported-technologies.md)
+- [Real User Monitoring (RUM)](https://docs.groundcover.com/capabilities/real-user-monitoring-rum.md): Monitor front-end applications and connect it to your backend — all inside your cloud.
+- [AI Observability](https://docs.groundcover.com/capabilities/ai-observability.md)
+- [Synthetics](https://docs.groundcover.com/capabilities/synthetics.md)
+- [Requirements](https://docs.groundcover.com/getting-started/requirements.md)
+- [Kubernetes requirements](https://docs.groundcover.com/getting-started/requirements/kubernetes-requirements.md)
+- [Kernel requirements for eBPF sensor](https://docs.groundcover.com/getting-started/requirements/kernel-requirements-for-ebpf-sensor.md)
+- [CPU architectures](https://docs.groundcover.com/getting-started/requirements/cpu-architectures.md)
+- [Login and Create a Workspace](https://docs.groundcover.com/getting-started/login-and-create-a-workspace.md): Get started with groundcover
+- [I can't find my workspace](https://docs.groundcover.com/getting-started/login-and-create-a-workspace/i-cant-find-my-workspace.md)
+- [Installation & Updating](https://docs.groundcover.com/getting-started/installation-and-updating.md): Multiple ways to connect your infrastructure and applications to groundcover
+- [Connect Kubernetes clusters](https://docs.groundcover.com/getting-started/installation-and-updating/connect-kubernetes-cluster.md): Get up and running in minutes in Kubernetes
+- [Connect Linux hosts](https://docs.groundcover.com/getting-started/installation-and-updating/connect-linux-hosts.md): Linux hosts sensor
+- [Connect RUM](https://docs.groundcover.com/getting-started/installation-and-updating/connect-rum.md)
+- [5 quick steps to get you started](https://docs.groundcover.com/getting-started/5-quick-steps-to-get-you-started.md)
+- [groundcover MCP](https://docs.groundcover.com/getting-started/groundcover-mcp.md)
+- [Configure groundcover's MCP Server](https://docs.groundcover.com/getting-started/groundcover-mcp/configure-groundcovers-mcp-server.md)
+- [MCP Tools Reference](https://docs.groundcover.com/getting-started/groundcover-mcp/mcp-tools-reference.md)
+- [Getting-started Prompts](https://docs.groundcover.com/getting-started/groundcover-mcp/getting-started-prompts.md)
+- [Real-world Use Cases](https://docs.groundcover.com/getting-started/groundcover-mcp/real-world-use-cases.md)
+- [Migrations](https://docs.groundcover.com/getting-started/migrations.md)
+- [Migrate from Datadog](https://docs.groundcover.com/getting-started/migrations/migrate-from-datadog.md)
+- [Monitors](https://docs.groundcover.com/use-groundcover/monitors.md)
+- [Create a new Monitor](https://docs.groundcover.com/use-groundcover/monitors/create-a-new-monitor.md)
+- [Issues page](https://docs.groundcover.com/use-groundcover/monitors/issues-page.md): View and analyze monitor issues with detailed timelines, metadata, and context to quickly identify and resolve problems in your environment.
+- [Monitor List page](https://docs.groundcover.com/use-groundcover/monitors/monitor-list-page.md): View, filter, and manage all monitors in one place, and quickly identify issues or create new monitors.
+- [Notification Routes](https://docs.groundcover.com/use-groundcover/monitors/notification-routes.md): Notification Routes let you automatically send notifications to Destinations when monitor issues change state.
+- [Silences page](https://docs.groundcover.com/use-groundcover/monitors/silences-page.md): Manage and create silences to suppress Monitor notifications during maintenance or specific periods. Use one-time silences for ad-hoc needs, or recurring silences for scheduled maintenance windows tha
+- [Monitor Catalog page](https://docs.groundcover.com/use-groundcover/monitors/monitor-catalog-page.md): Explore and select pre-built Monitors from the catalog to quickly set up observability for your environment. Customize and deploy Monitors in just a few clicks.
+- [Monitor YAML structure](https://docs.groundcover.com/use-groundcover/monitors/monitor-yaml-structure.md)
+- [SQL Based Monitors](https://docs.groundcover.com/use-groundcover/monitors/sql-based-monitors.md)
+- [Migrating from Issues to Monitors Issues Page](https://docs.groundcover.com/use-groundcover/monitors/migrating-from-issues-to-monitors-issues-page.md)
+- [Dashboards](https://docs.groundcover.com/use-groundcover/dashboards-and-alerts.md): Learn how to build custom dashboards using groundcover
+- [Creating Dashboards](https://docs.groundcover.com/use-groundcover/dashboards-and-alerts/create-a-dashboard.md)
+- [Dashboard Catalog](https://docs.groundcover.com/use-groundcover/dashboards-and-alerts/dashboard-catalog.md): Browse groundcover's library of pre-built dashboards and install the ones you need. Installed dashboards are managed by groundcover and stay current automatically. Customize one to make it your own.
+- [Dashboard Visualizations](https://docs.groundcover.com/use-groundcover/dashboards-and-alerts/dashboard-visualizations.md)
+- [Dashboard Version History](https://docs.groundcover.com/use-groundcover/dashboards-and-alerts/dashboard-version-history.md)
+- [Managing Dashboards with Terraform](https://docs.groundcover.com/use-groundcover/dashboards-and-alerts/managing-dashboards-with-terraform.md)
+- [Agent Mode](https://docs.groundcover.com/use-groundcover/agent-mode.md): AI-powered assistant for investigating, exploring, and building with your groundcover data
+- [Requirements & Compatibility](https://docs.groundcover.com/use-groundcover/agent-mode/requirements.md): Deployment types and prerequisites for using Agent Mode
+- [Getting Started](https://docs.groundcover.com/use-groundcover/agent-mode/getting-started.md): Learn how to interact with groundcover Agent Mode
+- [Skills](https://docs.groundcover.com/use-groundcover/agent-mode/skills.md): Teach the Agent your team's workflows, runbooks, and conventions with custom Skills
+- [Example Prompts](https://docs.groundcover.com/use-groundcover/agent-mode/example-prompts.md): Ready-to-use prompts for common investigation, exploration, and creation scenarios
+- [Configuring Settings](https://docs.groundcover.com/use-groundcover/agent-mode/configuring-settings.md): How to configure Agent Mode access, LLM providers, instructions, and budgets for your workspace
+- [Privacy & Security](https://docs.groundcover.com/use-groundcover/agent-mode/privacy-and-security.md): Data handling, LLM providers, tenant isolation, session management, and access control for groundcover Agent Mode
+- [Cost Management](https://docs.groundcover.com/use-groundcover/agent-mode/cost-management.md): Control monthly Agent Mode spending with organization, default, and per-user cost limits
+- [Connectors](https://docs.groundcover.com/use-groundcover/connectors.md): Connectors let individual users link their external tool accounts to groundcover, enabling Agent Mode to take actions on their behalf
+- [Slack](https://docs.groundcover.com/use-groundcover/connectors/slack.md)
+- [@groundcover Agent in Slack](https://docs.groundcover.com/use-groundcover/connectors/slack/slack-agent.md): Interact with groundcover's Agent directly from Slack by mentioning @groundcover in any channel
+- [Linear](https://docs.groundcover.com/use-groundcover/connectors/linear.md): Connect Linear to create and manage issues from monitor incidents, notification routes, and groundcover Agent Mode
+- [Cursor Cloud Agents](https://docs.groundcover.com/use-groundcover/connectors/cursor.md): Connect your Cursor account to let groundcover Agent Mode run code changes on your repositories using Cursor's cloud coding agent
+- [Claude Managed Agents](https://docs.groundcover.com/use-groundcover/connectors/claude-managed-agents.md): Connect Claude Managed Agents to let groundcover Agent Mode run coding tasks with your configured Claude agent and environment
+- [Notion](https://docs.groundcover.com/use-groundcover/connectors/notion.md): Connect Notion to search workspace knowledge and publish Agent Mode findings
+- [Pylon](https://docs.groundcover.com/use-groundcover/connectors/pylon.md): Connect Pylon to investigate customer issues and take support actions from Agent Mode
+- [GitHub](https://docs.groundcover.com/use-groundcover/connectors/github.md): Connect GitHub to investigate code and manage development work from Agent Mode
+- [PagerDuty](https://docs.groundcover.com/use-groundcover/connectors/pagerduty.md): Connect PagerDuty to investigate and manage incidents from Agent Mode
+- [Rootly](https://docs.groundcover.com/use-groundcover/connectors/rootly.md): Connect Rootly to investigate incidents and coordinate response from Agent Mode
+- [incident.io](https://docs.groundcover.com/use-groundcover/connectors/incident-io.md): Connect incident.io to analyze operations and manage incidents from Agent Mode
+- [Atlassian Rovo](https://docs.groundcover.com/use-groundcover/connectors/atlassian-rovo.md): Connect Atlassian Rovo to work with Jira and Confluence from Agent Mode
+- [Remote MCP Servers](https://docs.groundcover.com/use-groundcover/connectors/mcp.md): Allowlist Remote MCP Servers to extend Agent Mode with custom tools and capabilities
+- [Insights](https://docs.groundcover.com/use-groundcover/insights.md): Quickly understand your data with groundcover
+- [AI Observability](https://docs.groundcover.com/use-groundcover/ai-observability.md)
+- [Span Attributes](https://docs.groundcover.com/use-groundcover/ai-observability/attributes.md)
+- [Example Queries](https://docs.groundcover.com/use-groundcover/ai-observability/example-queries.md)
+- [Privacy Controls](https://docs.groundcover.com/use-groundcover/ai-observability/privacy-controls.md)
+- [Troubleshooting](https://docs.groundcover.com/use-groundcover/ai-observability/troubleshooting.md)
+- [Workflows](https://docs.groundcover.com/use-groundcover/workflows.md)
+- [Create a new Workflow](https://docs.groundcover.com/use-groundcover/workflows/create-a-new-workflow.md)
+- [Workflow Examples](https://docs.groundcover.com/use-groundcover/workflows/workflow-examples.md)
+- [Integration Examples with Workflows](https://docs.groundcover.com/use-groundcover/workflows/integration-examples.md)
+- [Full Webhook Examples](https://docs.groundcover.com/use-groundcover/workflows/full-webhook-examples.md)
+- [incident.io](https://docs.groundcover.com/use-groundcover/workflows/full-webhook-examples/incident.io.md)
+- [MS Teams](https://docs.groundcover.com/use-groundcover/workflows/full-webhook-examples/ms-teams.md)
+- [Slack App for Channel Routing](https://docs.groundcover.com/use-groundcover/workflows/full-webhook-examples/slack-app-for-channel-routing.md)
+- [Alert Structure](https://docs.groundcover.com/use-groundcover/workflows/alert-structure.md): Fields description in the alert you can use in your workflows
+- [Search & Filter](https://docs.groundcover.com/use-groundcover/search-and-filter.md)
+- [Saved Views](https://docs.groundcover.com/use-groundcover/saved-views.md): Save the view of any groundcover page exactly the way you like it, then jump back in a click.
+- [Role-Based Access Control (RBAC)](https://docs.groundcover.com/use-groundcover/role-based-access-control-rbac.md)
+- [Remote Access & APIs](https://docs.groundcover.com/use-groundcover/remote-access-and-apis.md): groundcover has various authentication key types for remotely interacting with our platform, whether to ingest observability data or to automate actions via our APIs:
+- [Service Accounts](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/service-accounts.md): A service account is a non-human identity for API access, governed by RBAC and supporting multiple API keys.
+- [API Keys](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-keys.md): An API key in groundcover provides secure, programmatic access to the API on behalf of a service account. It inherits that account’s permissions and should be stored safely.
+- [Ingestion Keys](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/ingestion-keys.md): Secure, write‑focused credentials for streaming data into groundcover
+- [Datasource API Keys (Legacy)](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/querying-you-data-using-an-api.md)
+- [Grafana Service Account Token](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/build-alerts-and-dashboards-with-grafana-terraform-provider.md)
+- [Metrics and Logs API](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/raw-prometheus-and-clickhouse.md): This page describes the available API endpoints for querying logs and metrics in groundcover, including how to authenticate and structure requests for general data retrieval.
+- [API Examples](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples.md): Welcome to the API examples section. Here, you’ll find practical demonstrations of how to interact with our API endpoints using cURL commands. Each example is designed to help you quickly understand h
+- [List Workloads](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-workloads.md): Retrieve a list of Kubernetes workloads with their performance metrics, resource usage, and metadata.
+- [List Namespaces](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-namespaces.md): Retrieve a list of Kubernetes namespaces within a specified time range.
+- [List Clusters](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-clusters.md): Retrieve a list of Kubernetes clusters with their resource usage metrics, metadata, and health information.
+- [List Deployments](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-deployments.md): Get a list of Kubernetes deployments with status information, replica counts, and operational conditions for a specified time range.
+- [List Monitors](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-monitors.md): Get a list of all configured monitors in the system with their identifiers, titles, and types.
+- [Get Monitor](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/get-monitor.md): Retrieve detailed configuration for a specific monitor by its UUID, including queries, thresholds, display settings, and evaluation parameters.
+- [Create Silence](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/create-silence.md): Create a new one-time silence rule to suppress monitor notifications for a specified time period, using label matchers to target specific monitors or issues.
+- [Delete Silence](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/delete-silence.md): Delete an existing silence rule using its silence ID.
+- [Recurring Silences API](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/recurring-silences-api.md): Create, list, update, and delete recurring silence rules that automatically suppress monitor notifications on a repeating schedule.
+- [List Workflows](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-workflows.md): Get a list of all configured alert workflows with their complete definitions, provider integrations, execution status, and YAML configurations.
+- [Create Workflow](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/create-workflow.md): Creates a new workflow for alert handling and notifications. Workflows define how alerts are processed and routed to various integrations like Slack, PagerDuty, webhooks, etc.
+- [Delete Workflow](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/delete-workflow.md): Delete an existing workflow using workflow id
+- [List Nodes with Resource Information](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-nodes-with-resource-information.md)
+- [Get Logs Pipeline Configuration](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/get-logs-pipeline-configuration.md): Retrieve the current logs pipeline configuration.
+- [Update Logs Pipeline Configuration](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/update-logs-pipeline-configuration.md): Update the logs pipeline configuration.
+- [List Ingestion Keys](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-ingestion-keys.md): Get a list of ingestion keys with optional filtering by name, type, and remote configuration status.
+- [Create Ingestion Key](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/create-ingestion-key.md): Create a new ingestion key.
+- [Delete Ingestion Key](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/delete-ingestion-key.md): Delete an existing ingestion key. This operation permanently removes the key and cannot be undone.
+- [Query Monitors Summary](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-monitors-summary.md): Get a comprehensive list of monitor configurations with detailed execution status, alert states, performance metrics, and complete query definitions. This endpoint provides real-time monitoring data f
+- [Query Metrics](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-metrics.md): Execute PromQL queries against groundcover metrics data. Two endpoints are available: instant queries for point-in-time values and range queries for time-series data over specific periods.
+- [Query Logs](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs.md)
+- [The basics of querying logs](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs/the-basics-of-querying-logs.md)
+- [Pagination](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs/pagination.md)
+- [Advanced Log Queries](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs/advanced-log-queries.md)
+- [groundcover Terraform Provider](https://docs.groundcover.com/use-groundcover/groundcover-terraform-provider.md)
+- [Log Patterns](https://docs.groundcover.com/use-groundcover/log-patterns.md): Log Patterns help you cut through log noise by grouping similar logs based on structure. Instead of digging through thousands of raw lines, you get a clean, high-level view of what’s actually going on
+- [Embedded Grafana](https://docs.groundcover.com/use-groundcover/embedded-grafana.md)
+- [Dashboards](https://docs.groundcover.com/use-groundcover/embedded-grafana/embedded-grafana-dashboards.md)
+- [Create a Grafana dashboard](https://docs.groundcover.com/use-groundcover/embedded-grafana/embedded-grafana-dashboards/create-a-dashboard.md)
+- [Build alerts & dashboards with Grafana Terraform provider](https://docs.groundcover.com/use-groundcover/embedded-grafana/embedded-grafana-dashboards/build-alerts-and-dashboards-with-grafana-terraform-provider.md)
+- [Alerts](https://docs.groundcover.com/use-groundcover/embedded-grafana/embedded-grafana-alerts.md)
+- [Create a Grafana alert](https://docs.groundcover.com/use-groundcover/embedded-grafana/embedded-grafana-alerts/create-an-alert.md)
+- [Drilldown](https://docs.groundcover.com/use-groundcover/drilldown.md): The Drilldown view helps you to quickly identify and highlight the most informative attributes - those that stand out and help you pinpoint anomalies or bottlenecks.
+- [Maps](https://docs.groundcover.com/use-groundcover/maps.md): Visualize service dependencies and request flows with groundcover Maps
+- [Backup & Restore Metrics](https://docs.groundcover.com/use-groundcover/backup-and-restore-metrics.md): Learn how to backup and restore metrics into groundcover metrics storage
+- [Metrics & Labels](https://docs.groundcover.com/use-groundcover/metrics-and-labels.md)
+- [Host CPU Metrics](https://docs.groundcover.com/use-groundcover/metrics-and-labels/host-cpu-metrics.md)
+- [Metric Summary](https://docs.groundcover.com/use-groundcover/metric-summary.md)
+- [Add custom environment labels](https://docs.groundcover.com/use-groundcover/add-custom-environment-labels.md): Enhance your ability to easily monitor a group of clusters
+- [Querying Data](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data.md): groundcover provides multiple ways to query and analyze your observability data.
+- [groundcover Query Language](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/groundcover-query-language.md): The groundcover Query Language is a powerful tool for querying and analyzing logs, traces, and events across your infrastructure.
+- [Filters](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/groundcover-query-language/filters.md)
+- [Aggregations](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/groundcover-query-language/aggregations.md)
+- [Join Operations](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/groundcover-query-language/join-operations.md)
+- [Pipeline Operations](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/groundcover-query-language/pipeline-operations.md)
+- [groundcover Query Language (gcQL) Reference](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/groundcover-query-language/groundcover-query-language-gcql-reference.md)
+- [Data Explorer & Query builder](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/explore-and-monitors-query-builder.md): The Query Builder in the platform's Explore and Monitors sections helps you craft and visualize queries on top of your data - Metrics, Logs, Traces, Events, APM, RUM, Issues and Ingestion.
+- [Using KEDA autoscaler with groundcover](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/using-keda-autoscaler-with-groundcover.md): groundcover can be used as a Prometheus datasource for KEDA autoscaler. Any metric stored in groundcover can be queried and used to automatically make decisions about scaling your infrastructure.
+- [Using groundcover as Prometheus/Clickhouse database in a Self-hosted Grafana](https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/using-groundcover-as-a-database.md): Exposing Data Sources for BYOC installations
+- [Fleet Manager](https://docs.groundcover.com/use-groundcover/fleet-manager.md): The fleet manager service is a backend component that is in charge of managing groundcover's entities throughout the different clusters managed by the backend.
+- [Billing](https://docs.groundcover.com/use-groundcover/billing.md): The Billing page helps you manage your groundcover subscription, view current pricing plans, and monitor node usage across your infrastructure. You can access it from Settings > Billing.
+- [Data Pipelines](https://docs.groundcover.com/use-groundcover/data-pipelines.md)
+- [Logs Pipeline](https://docs.groundcover.com/use-groundcover/data-pipelines/log-pipelines.md)
+- [Parsing Logs](https://docs.groundcover.com/use-groundcover/data-pipelines/log-pipelines/parsing-logs.md)
+- [Drop Logs](https://docs.groundcover.com/use-groundcover/data-pipelines/log-pipelines/drop-logs.md)
+- [Obfuscate Logs](https://docs.groundcover.com/use-groundcover/data-pipelines/log-pipelines/obfuscate-logs.md)
+- [Logs-to-Metrics](https://docs.groundcover.com/use-groundcover/data-pipelines/log-pipelines/logs-to-metrics.md)
+- [Merging Multiline Logs](https://docs.groundcover.com/use-groundcover/data-pipelines/log-pipelines/merging-multiline-logs.md)
+- [Metrics Aggregation](https://docs.groundcover.com/use-groundcover/data-pipelines/metrics-aggregation.md)
+- [Traces Pipeline](https://docs.groundcover.com/use-groundcover/data-pipelines/traces-pipeline.md)
+- [Filter Traces](https://docs.groundcover.com/use-groundcover/data-pipelines/traces-pipeline/filter-traces.md)
+- [Obfuscate Traces](https://docs.groundcover.com/use-groundcover/data-pipelines/traces-pipeline/obfuscate-traces.md)
+- [Span to Metrics](https://docs.groundcover.com/use-groundcover/data-pipelines/traces-pipeline/span-to-metrics.md)
+- [Enrich workloads with service and team metadata](https://docs.groundcover.com/use-groundcover/enrich-workloads-with-service-and-team-metadata.md)
+- [Custom resource workloads](https://docs.groundcover.com/use-groundcover/custom-resource-workloads.md): How groundcover discovers Kubernetes Custom Resource Definitions and resolves matching instances to workloads.
+- [Storage Management](https://docs.groundcover.com/use-groundcover/storage-management.md): Optimize between your storage needs and storage costs
+- [Log and Trace Correlation](https://docs.groundcover.com/log-and-trace-correlation.md)
+- [Real User Monitoring](https://docs.groundcover.com/rum.md): Quickly see how real users experience your app and catch front-end issues early.
+- [Customize deployment](https://docs.groundcover.com/customization/customize-deployment.md)
+- [Agents in host network mode](https://docs.groundcover.com/customization/customize-deployment/agents-in-host-network-mode.md)
+- [API Key Secret](https://docs.groundcover.com/customization/customize-deployment/api-key-secret.md)
+- [Argo CD](https://docs.groundcover.com/customization/customize-deployment/argo-cd.md)
+- [On-premise deployment](https://docs.groundcover.com/customization/customize-deployment/on-premise-deployment.md)
+- [Quay.io registry](https://docs.groundcover.com/customization/customize-deployment/quay.io-registry.md)
+- [Configuring sensor Deployment on Kubernetes](https://docs.groundcover.com/customization/customize-deployment/configuring-sensor-deployment-coverage.md)
+- [Enabling SSL Tracing in Java Applications](https://docs.groundcover.com/customization/customize-deployment/enabling-ssl-tracing-in-java-applications.md)
+- [Telemetry](https://docs.groundcover.com/customization/customize-deployment/telemetry.md)
+- [Adding Source control context](https://docs.groundcover.com/customization/customize-deployment/source-control-gitlab-github.md): Enrich traces with relevant source control metadata.
+- [Customize usage](https://docs.groundcover.com/customization/customize-usage.md)
+- [Filtering Kubernetes entities](https://docs.groundcover.com/customization/customize-usage/filtering-kubernetes-entities.md): Customize data collection by filtering K8s entities
+- [Custom data retention](https://docs.groundcover.com/customization/customize-usage/custom-data-retention.md)
+- [Sensitive data obfuscation](https://docs.groundcover.com/customization/customize-usage/sensitive-data-obfuscation.md)
+- [Custom storage](https://docs.groundcover.com/customization/customize-usage/custom-storage.md): Customize groundcover storage volumes for logs, metrics and traces
+- [Custom logs collection](https://docs.groundcover.com/customization/customize-usage/custom-logs-collection.md): Custom k8s logs filtering / storing
+- [Custom labels and annotations](https://docs.groundcover.com/customization/customize-usage/custom-labels-and-annotations.md)
+- [Enrich data with static labels](https://docs.groundcover.com/customization/customize-usage/custom-labels-and-annotations/enrich-metrics-with-static-labels.md)
+- [Enrich logs, traces, events, and metrics with pod labels & annotations](https://docs.groundcover.com/customization/customize-usage/custom-labels-and-annotations/enrich-logs-and-traces-with-pod-labels-and-annotations.md)
+- [Enrich metrics with node labels](https://docs.groundcover.com/customization/customize-usage/custom-labels-and-annotations/enrich-metrics-with-node-labels.md)
+- [Customize tracing payload size](https://docs.groundcover.com/customization/customize-usage/customize-tracing-payload-size.md)
+- [Disable tracing for specific protocols](https://docs.groundcover.com/customization/customize-usage/disable-tracing-for-specific-protocols.md)
+- [Tuning resources](https://docs.groundcover.com/customization/customize-usage/tuning-resources.md)
+- [Controlling the eBPF sampling mechanism](https://docs.groundcover.com/customization/customize-usage/controlling-the-ebpf-sampling-mechanism.md)
+- [Overview](https://docs.groundcover.com/integrations/overview.md)
+- [Data Sources](https://docs.groundcover.com/integrations/data-sources.md)
+- [Enriching 3rd Party Data](https://docs.groundcover.com/integrations/data-sources/enriching-3rd-party-data.md)
+- [OpenTelemetry](https://docs.groundcover.com/integrations/data-sources/opentelemetry.md): Ingest and visualize OTEL data with groundcover
+- [Sending from Kubernetes Pods](https://docs.groundcover.com/integrations/data-sources/opentelemetry/sending-from-kubernetes-pods.md)
+- [Sending from an OpenTelemetry Collector](https://docs.groundcover.com/integrations/data-sources/opentelemetry/sending-from-an-opentelemetry-collector.md)
+- [Sending from Standalone Applications](https://docs.groundcover.com/integrations/data-sources/opentelemetry/sending-from-standalone-hosts.md)
+- [Prometheus](https://docs.groundcover.com/integrations/data-sources/prometheus.md): Integrate with Prometheus
+- [Scraping Metrics in Kubernetes](https://docs.groundcover.com/integrations/data-sources/prometheus/scrape-using-sensor.md): Automatically scrape metrics from pods and other services
+- [Scraping Metrics in Standalone Hosts](https://docs.groundcover.com/integrations/data-sources/prometheus/scraping-metrics-in-standalone-hosts.md): Automatically scrape metrics from processes running on standalone hosts
+- [Scraping Metrics from groundcover Backend](https://docs.groundcover.com/integrations/data-sources/prometheus/scrape-using-sensor-1.md): Automatically scrape metrics from processes running on cloud hosts
+- [Pushing Metrics using Remote Write](https://docs.groundcover.com/integrations/data-sources/prometheus/push-metrics-to-groundcover.md): Push Prometheus metrics directly to groundcover.
+- [AWS](https://docs.groundcover.com/integrations/data-sources/aws.md): Ingesting CloudWatch data in groundcover
+- [Monitor Lambdas using OTEL Layers](https://docs.groundcover.com/integrations/data-sources/aws/monitor-lambda-functions.md)
+- [Ingest CloudWatch Metrics](https://docs.groundcover.com/integrations/data-sources/aws/ingest-cloudwatch-metrics.md)
+- [Ingest CloudWatch Logs](https://docs.groundcover.com/integrations/data-sources/aws/ingest-cloudwatch-logs.md)
+- [Using CloudFormation For CloudWatch Logs Integration](https://docs.groundcover.com/integrations/data-sources/aws/ingest-cloudwatch-logs/using-cloudformation-for-cloudwatch-logs-integration.md)
+- [Manual Setup Of The Integration](https://docs.groundcover.com/integrations/data-sources/aws/ingest-cloudwatch-logs/manual-setup-of-the-integration.md)
+- [Ingest Logs Stored on S3](https://docs.groundcover.com/integrations/data-sources/aws/ingest-logs-stored-on-s3.md)
+- [Integrate CloudWatch Grafana Datasource](https://docs.groundcover.com/integrations/data-sources/aws/integrate-cloudwatch-grafana-datasource.md)
+- [Adding AWS Integration with a Backend on Another Cloud Provider](https://docs.groundcover.com/integrations/data-sources/aws/adding-aws-integration-with-a-backend-on-another-cloud-provider.md)
+- [AWS Cost & Usage](https://docs.groundcover.com/integrations/data-sources/aws/aws-cost-and-usage.md): Bring your AWS Cost and Usage Report (CUR) into groundcover.
+- [Monitor VPC, RDS & DynamoDB](https://docs.groundcover.com/integrations/data-sources/aws/monitor-vpc-rds-dynamodb.md): Monitor AWS VPC subnets, RDS instances, and DynamoDB tables with a single consolidated integration.
+- [GCP](https://docs.groundcover.com/integrations/data-sources/google-cloud-monitoring.md): Ingesting Google Cloud Monitoring data in groundcover
+- [Ingest Google Cloud Monitoring Metrics](https://docs.groundcover.com/integrations/data-sources/google-cloud-monitoring/ingest-google-cloud-monitoring-metrics.md)
+- [Stream Logs using Pub/Sub](https://docs.groundcover.com/integrations/data-sources/google-cloud-monitoring/stream-logs-using-pub-sub.md)
+- [Integrate Google Cloud Monitoring Grafana Datasource](https://docs.groundcover.com/integrations/data-sources/google-cloud-monitoring/integrate-google-cloud-monitoring-grafana-datasource.md)
+- [Adding GCP Integration with a Backend on Another Cloud Provider](https://docs.groundcover.com/integrations/data-sources/google-cloud-monitoring/adding-gcp-integration-with-a-backend-on-another-cloud-provider.md)
+- [Azure](https://docs.groundcover.com/integrations/data-sources/azure.md)
+- [Ingest Azure Monitor Metrics](https://docs.groundcover.com/integrations/data-sources/azure/ingest-azure-monitor-metrics.md)
+- [DataDog](https://docs.groundcover.com/integrations/data-sources/datadog.md): Learn how to ingest DataDog generated Traces & Metrics directly into groundcover
+- [Shipping from the DataDog Agent](https://docs.groundcover.com/integrations/data-sources/datadog/shipping-from-the-datadog-agent.md)
+- [Sending Directly from Instrumented Services](https://docs.groundcover.com/integrations/data-sources/datadog/sending-directly-from-instrumented-services.md)
+- [MongoDB Atlas](https://docs.groundcover.com/integrations/data-sources/mongodb-atlas.md): Scrape metrics from your MongoDB Atlas
+- [MongoDB Atlas Metrics](https://docs.groundcover.com/integrations/data-sources/mongodb-atlas/mongodb-atlas-metrics.md): Metrics groundcover collects from MongoDB Atlas.
+- [Redis Cloud](https://docs.groundcover.com/integrations/data-sources/redis-cloud.md): Collect metrics from your Redis Cloud instances
+- [Redis Metrics](https://docs.groundcover.com/integrations/data-sources/redis-cloud/redis-metrics.md): Metrics groundcover collects from Redis Cloud.
+- [RabbitMQ](https://docs.groundcover.com/integrations/data-sources/rabbitmq.md): Collect metrics from your RabbitMQ nodes
+- [RabbitMQ Metrics](https://docs.groundcover.com/integrations/data-sources/rabbitmq/rabbitmq-metrics.md): Metrics groundcover collects from RabbitMQ.
+- [ArgoCD](https://docs.groundcover.com/integrations/data-sources/argocd.md): Collect metrics from your ArgoCD components
+- [ArgoCD Metrics](https://docs.groundcover.com/integrations/data-sources/argocd/argocd-metrics.md): Metrics groundcover collects from ArgoCD.
+- [FluentBit](https://docs.groundcover.com/integrations/data-sources/fluentbit.md)
+- [Fluentd](https://docs.groundcover.com/integrations/data-sources/fluentd.md)
+- [JSON Logs](https://docs.groundcover.com/integrations/data-sources/json-logs.md)
+- [Vector](https://docs.groundcover.com/integrations/data-sources/vector.md): Send logs, traces, and metrics to groundcover using Vector
+- [Cloudflare](https://docs.groundcover.com/integrations/data-sources/cloudflare.md)
+- [AI Tools Observability](https://docs.groundcover.com/integrations/data-sources/ai-tools-observability.md)
+- [Claude Code Metrics](https://docs.groundcover.com/integrations/data-sources/ai-tools-observability/claude-code-metrics.md): Metrics groundcover collects from Claude Code.
+- [Istio](https://docs.groundcover.com/integrations/data-sources/istio.md): Monitoring Istio Service Mesh with groundcover.
+- [GitHub CI/CD Actions](https://docs.groundcover.com/integrations/data-sources/github-ci-cd-actions.md)
+- [Monitor Data Sources Integrations](https://docs.groundcover.com/integrations/monitor-data-sources-integrations.md)
+- [Notification Channels](https://docs.groundcover.com/integrations/workflow-integrations.md)
+- [Slack](https://docs.groundcover.com/integrations/workflow-integrations/slack-webhook-integration.md)
+- [OpsGenie](https://docs.groundcover.com/integrations/workflow-integrations/opsgenie-integration.md)
+- [PagerDuty](https://docs.groundcover.com/integrations/workflow-integrations/pagerduty-integration.md)
+- [Webhook](https://docs.groundcover.com/integrations/workflow-integrations/webhook-integration.md)
+- [incident.io](https://docs.groundcover.com/integrations/workflow-integrations/incident.io.md)
+- [MS Teams](https://docs.groundcover.com/integrations/workflow-integrations/ms-teams.md)
+- [Jira](https://docs.groundcover.com/integrations/workflow-integrations/jira-webhook-integration.md)
+- [Email alerts via Zapier](https://docs.groundcover.com/integrations/workflow-integrations/send-groundcover-alerts-to-email-via-zapier.md)
+- [Destinations](https://docs.groundcover.com/integrations/connected-apps.md): Destinations are external integrations you configure to receive notifications from or interact with groundcover
+- [Slack App](https://docs.groundcover.com/integrations/connected-apps/slack-app.md)
+- [Slack Webhook](https://docs.groundcover.com/integrations/connected-apps/slack-webhook.md)
+- [PagerDuty](https://docs.groundcover.com/integrations/connected-apps/pagerduty.md)
+- [incident.io](https://docs.groundcover.com/integrations/connected-apps/incident.io.md)
+- [Rootly](https://docs.groundcover.com/integrations/connected-apps/incident.io-1.md)
+- [Generic Webhook](https://docs.groundcover.com/integrations/connected-apps/generic-webhook.md)
+- [Using Predefined Variables](https://docs.groundcover.com/integrations/connected-apps/generic-webhook/using-predefined-variables.md)
+- [MS Teams Webhook Example](https://docs.groundcover.com/integrations/connected-apps/generic-webhook/ms-teams-webhook-example.md)
+- [Email via Zapier](https://docs.groundcover.com/integrations/connected-apps/generic-webhook/email-via-zapier.md)
+- [OpsGenie](https://docs.groundcover.com/integrations/connected-apps/opsgenie-integration.md)
+- [Overview](https://docs.groundcover.com/architecture/overview.md)
+- [BYOC - Bring Your Own Cloud](https://docs.groundcover.com/architecture/byoc.md)
+- [Setup BYOC with AWS](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-aws.md)
+- [AWS PrivateLink Setup](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-aws/aws-privatelink-setup.md)
+- [EKS add-on](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-aws/eks-add-on.md)
+- [Setup BYOC with GCP](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-gcp.md)
+- [Running the groundcover sensor on GKE Autopilot](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-gcp/running-the-groundcover-sensor-on-gke-autopilot.md): Running the privileged groundcover sensor on GKE Autopilot requires an approved WorkloadAllowlist and Autopilot mode in the chart.
+- [Enable AI models for Agent Mode](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-gcp/enable-ai-models-for-agent-mode.md): Enable the Anthropic Claude models required for groundcover Agent in a GCP BYOC deployment.
+- [Setup BYOC with Azure](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-azure.md)
+- [Azure PrivateLink Setup](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-azure/azure-privatelink-setup.md)
+- [Enable AI models for Agent Mode](https://docs.groundcover.com/architecture/byoc/setup-byoc-with-azure/enable-ai-models-for-agent-mode.md): Reference for the Azure resources groundcover provisions to power Agent Mode in an Azure BYOC deployment.
+- [High Availability](https://docs.groundcover.com/architecture/byoc/high-availability.md)
+- [Disaster Recovery](https://docs.groundcover.com/architecture/byoc/disaster-recovery.md)
+- [Ingestion Endpoints](https://docs.groundcover.com/architecture/byoc/ingestion-endpoints.md)
+- [Deploying in Sensor-Only mode](https://docs.groundcover.com/architecture/byoc/deploying-in-sensor-only-mode.md)
+- [Security considerations](https://docs.groundcover.com/architecture/security-considerations.md)
+- [Okta SSO - onboarding](https://docs.groundcover.com/architecture/security-considerations/okta-sso-onboarding.md): To connect your Okta tenant as an identity Provider in groundcover, you must create an OIDC application
+- [Okta Roles Integration](https://docs.groundcover.com/architecture/security-considerations/okta-sso-onboarding/okta-roles-integration.md)
+- [What's new?](https://docs.groundcover.com/product-updates/whats-new.md)
+- [Example](https://docs.groundcover.com/articles/example.md)
+- [Working with Metrics: Datadog vs groundcover](https://docs.groundcover.com/articles/datadog-metrics-to-prometheus.md)
+
+
+---
+
+# Agent Instructions
+This documentation is published with GitBook. GitBook is the documentation platform designed so that both humans and AI agents can read, navigate, and reason over technical content effectively. Learn more at gitbook.com.
+
+## Querying This Documentation
+If you need additional information, you can query the documentation dynamically by asking a question.
+Perform an HTTP GET request on a page URL with the `ask` query parameter:
+```
+GET https://docs.groundcover.com/welcome/readme.md?ask=<question>
+```
+The question should be specific, self-contained, and written in natural language.
+The response will contain a direct answer to the question and relevant excerpts and sources from the documentation.
+Use this mechanism when the answer is not explicitly present in the current page, you need clarification or additional context, or you want to retrieve related documentation sections.
