@@ -1,0 +1,104 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.groundcover.com/integrations/connected-apps/generic-webhook
+provider: Groundcover
+providerId: groundcover
+type: Webhooks
+asyncapi_published: false
+description: >-
+  groundcover publishes no AsyncAPI document, but it does have a real outbound event surface: when a
+  monitor issue changes state, Notification Routes deliver a templated payload to one or more
+  Destinations, one of which is a fully user-defined Generic Webhook. The payload is not a fixed
+  schema — the customer authors it with Jinja2 over a published variable set — so the contract worth
+  capturing is that variable set plus the state machine that fires it. Nothing here is fabricated
+  into an AsyncAPI shape it does not have.
+event_model:
+  producer: groundcover monitors
+  trigger: monitor issue state change
+  states:
+    - name: alerting
+      description: The monitor is firing.
+    - name: resolved
+      description: The monitor has recovered.
+    - name: test
+      description: >-
+        Emitted by the Test button in the Destination configuration UI; {{ status }} returns "test"
+        and value/threshold may carry placeholder values.
+  routing:
+    mechanism: Notification Routes
+    scope_language: gcQL (e.g. 'env:prod AND severity:S1')
+    rules: per-state rules (Firing and/or Resolved) selecting one or more Destinations
+    docs: https://docs.groundcover.com/use-groundcover/monitors/notification-routes
+  renotification:
+    field: renotification_count
+    description: Counter starting at 0, incremented on each re-notification.
+destinations:
+  - name: Generic Webhook
+    docs: https://docs.groundcover.com/integrations/connected-apps/generic-webhook
+    payload: user-defined custom payload with Jinja2 templating
+  - name: Slack App
+    docs: https://docs.groundcover.com/integrations/connected-apps/slack-app
+  - name: Slack Webhook
+    docs: https://docs.groundcover.com/integrations/connected-apps/slack-webhook
+  - name: Jira
+    docs: https://docs.groundcover.com/integrations/workflow-integrations/jira-webhook-integration
+  - name: MS Teams
+    docs: https://docs.groundcover.com/use-groundcover/workflows/full-webhook-examples/ms-teams
+  - name: incident.io
+    docs: https://docs.groundcover.com/use-groundcover/workflows/full-webhook-examples/incident.io
+  - name: Email via Zapier
+    docs: https://docs.groundcover.com/integrations/connected-apps/generic-webhook/email-via-zapier
+payload_variables:
+  syntax: '{{ variable }}'
+  templating: Jinja2 (conditionals, macros supported)
+  variables:
+    - name: summary
+      description: The monitor title from the issue details.
+    - name: description
+      description: The monitor description; may contain nested variables based on monitor definitions.
+    - name: monitor_name
+      description: The name of the monitor.
+    - name: monitor_id
+      description: Internal unique ID of the monitor.
+    - name: fingerprint
+      description: Unique ID for the specific issue — the deduplication key.
+    - name: severity
+      description: Monitor severity (S1, S2, S3, S4).
+    - name: status
+      description: Alert state — "alerting", "resolved" or "test".
+    - name: value
+      description: The monitor value that triggered the alert.
+    - name: threshold
+      description: The threshold configured in the monitor.
+    - name: timestamp
+      description: The firing time, UTC.
+    - name: renotification_count
+      description: Counter starting at 0, incremented with each re-notification.
+    - name: alertname
+      description: The alert name.
+    - name: urls.issue
+      description: URL to the issue for investigation.
+    - name: urls.monitor
+      description: URL to the monitor definition.
+    - name: urls.silence
+      description: URL to silence the monitor.
+    - name: urls.notification_route
+      description: URL to the notification route.
+  labels:
+    syntax: '{{ labels.<label> }}'
+    description: >-
+      Any monitor label — custom labels and group-by labels. Common examples in the docs:
+      labels.workload, labels.namespace, labels.env, labels.traceID. A label must be in the
+      monitor's group-by clause or set as a custom label to be available in a notification.
+legacy_surface:
+  name: Workflows
+  status: deprecated
+  variable_syntax_old: '{{ alert.labels.workload }}, {{ alert.annotations._gc_severity }}, {{ alert.alertname }}, {{ alert.fingerprint }}'
+  variable_syntax_new: '{{ labels.workload }}, {{ severity }}, {{ alertname }}, {{ fingerprint }}'
+  compatibility: The old alert.labels.* form is still accepted by Destinations.
+  docs: https://docs.groundcover.com/use-groundcover/workflows
+inbound_events:
+  note: >-
+    groundcover also CONSUMES events — OTLP, Prometheus scrape, AWS S3 log ingestion, Google Cloud
+    Pub/Sub, Datadog, FluentBit/FluentD and others — but those are ingestion integrations, not a
+    published event contract, and are catalogued as integrations in apis.yml.

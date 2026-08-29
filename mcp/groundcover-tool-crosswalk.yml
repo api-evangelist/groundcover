@@ -1,0 +1,141 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  mcp/groundcover-mcp.yml (published MCP Tools Reference) bound against the REST endpoints
+  documented at https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples
+provider: Groundcover
+providerId: groundcover
+description: >-
+  Crosswalk between groundcover's remote MCP tools and its REST API. IMPORTANT CAVEAT ON SHAPE:
+  groundcover publishes no OpenAPI, so the `rest:` column carries documented METHOD + PATH pairs
+  rather than operationIds — there are no operationIds to cite. Both sides are gated (MCP tools/list
+  returns 401 without a token; api.groundcover.com returns 400 without an Authorization header), so
+  bindings are matched by documented name and semantics, not by comparing live schemas. Confidence
+  is set accordingly.
+surfaces:
+  openapi:
+    published: false
+    note: >-
+      No public OpenAPI. Probed https://api.groundcover.com/openapi.json, /openapi.yaml,
+      /swagger.json, /v1/openapi.json, /api-docs, /docs and https://docs.groundcover.com/openapi.json
+      on 2026-08-29 — the api host returns 400 "Missing Authorization header" for every path and the
+      docs host returns its GitBook 404 shell. The SDK release workflows generate from an internal
+      spec published to a private S3 bucket (groundcover-openapi-sdk-bucket), which is not readable.
+    evidence_of_size: >-
+      The official Go SDK (github.com/groundcover-com/groundcover-sdk-go v1.410.0) is generated from
+      that spec and contains 112 operations across 25 tag packages and 198 models.
+  graphql:
+    published: false
+  mcp:
+    url: https://mcp.groundcover.com/api/mcp
+    gated: true
+    gate: 'HTTP 401 {"message":"Failed to validate JWT"} on tools/list'
+  rest:
+    base_url: https://api.groundcover.com
+    gated: true
+    gate: 'HTTP 400 {"message":"Missing Authorization header"} on every unauthenticated path'
+    docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples
+crosswalk:
+  - tool: query_logs
+    category: signal-query
+    rest:
+      - POST /api/logs/v2/search
+    binding: same-endpoint
+    confidence: high
+    note: >-
+      Both take a gcQL pipeline over a start/end window. The REST body is {start, end, query};
+      the tool exposes the same three plus a relative `period`.
+  - tool: query_traces
+    category: signal-query
+    rest:
+      - POST /api/traces/v2/search
+    binding: same-endpoint
+    confidence: high
+  - tool: query_events
+    category: signal-query
+    rest:
+      - POST /api/k8s/v2/events/search
+    binding: same-endpoint
+    confidence: high
+  - tool: query_metrics
+    category: signal-query
+    rest:
+      - POST /api/prometheus/api/v1/query
+      - POST /api/prometheus/api/v1/query_range
+    binding: equivalent
+    confidence: medium
+    note: >-
+      The tool documents four PromQL modes; the docs expose instant and range queries through the
+      Prometheus-compatible API, plus APM search / search-time-series endpoints. Mode-to-endpoint
+      mapping is not published.
+  - tool: query_monitors
+    category: signal-query
+    rest:
+      - POST /api/monitors/list
+    binding: equivalent
+    confidence: medium
+    note: >-
+      Docs also describe a monitors-summary query returning execution status and alert state; which
+      of the two backs the tool is not stated.
+  - tool: query_entities
+    category: signal-query
+    rest:
+      - POST /api/k8s/v3/workloads/list
+      - POST /api/k8s/v3/clusters/list
+    binding: partial
+    confidence: low
+    note: >-
+      The tool queries a unified live-entity store across all kinds (including non-Kubernetes
+      entities) with raw_json.* projection. The documented REST surface exposes per-resource list
+      endpoints instead. Overlapping, not equivalent.
+mcp_only:
+  - tool: list_workspaces
+    reason: >-
+      Tenant/backend discovery for an MCP connection. REST callers get the tenant from the API key
+      and read the Backend ID out of the console UI (Settings -> Access -> API Keys); no documented
+      REST endpoint returns this list.
+  - tool: query_issues
+    reason: >-
+      Monitor issue firings as a queryable signal. No documented public REST endpoint for issue
+      firings — the docs cover monitors, silences and workflows, not the issue stream.
+  - tool: search_logs_metadata
+    reason: Field/value discovery helper. No documented REST metadata endpoint.
+  - tool: search_traces_metadata
+    reason: Field/value discovery helper. No documented REST metadata endpoint.
+  - tool: search_events_metadata
+    reason: Field/value discovery helper. No documented REST metadata endpoint.
+  - tool: search_metrics_metadata
+    reason: Metric/label discovery helper. No documented REST metadata endpoint.
+rest_only:
+  - endpoint: POST /api/monitors/silences
+    reason: Create a one-time silence. No MCP tool — the MCP surface is read-only.
+  - endpoint: DELETE /api/monitors/silences/{silenceId}
+    reason: Delete a silence. Write operation, not exposed as a tool.
+  - endpoint: GET|POST|PUT|DELETE /api/monitors/recurring-silences
+    reason: Recurring silence CRUD. Write operations, not exposed as tools.
+  - endpoint: POST /api/workflows/create
+    reason: Create an alert workflow (deprecated surface). Not exposed as a tool.
+  - endpoint: DELETE /api/workflows/{id}
+    reason: Delete a workflow (deprecated surface). Not exposed as a tool.
+  - endpoint: POST /api/rbac/ingestion-keys/create
+    reason: Create an ingestion key. Credential management, not exposed as a tool.
+  - endpoint: POST /api/rbac/ingestion-keys/list
+    reason: List ingestion keys. Not exposed as a tool.
+  - endpoint: POST /api/rbac/ingestion-keys/delete
+    reason: Delete an ingestion key. Not exposed as a tool.
+  - endpoint: GET /api/pipelines/logs/config
+    reason: Read the logs pipeline configuration. Not exposed as a tool.
+  - endpoint: PUT /api/pipelines/logs/config
+    reason: Update the logs pipeline configuration. Write operation, not exposed as a tool.
+  - endpoint: POST /api/k8s/v3/clusters/list
+    reason: Cluster inventory with resource metrics. Only partially reachable via query_entities.
+coverage:
+  mcp_tools: 12
+  mcp_tools_bound_to_rest: 6
+  mcp_only: 6
+  rest_documented_endpoints: 17
+  rest_only: 11
+  note: >-
+    Counts cover DOCUMENTED REST endpoints only (17 in the API examples section). The Go SDK proves
+    112 generated operations exist, so the true rest_only figure is far larger; it cannot be
+    enumerated without the spec.

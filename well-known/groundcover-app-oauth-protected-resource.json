@@ -1,0 +1,1 @@
+{"resource":"https://mcp.groundcover.com/api/mcp","authorization_servers":["https://mcp.groundcover.com"],"bearer_methods_supported":["header"],"scopes_supported":["access:router"]}

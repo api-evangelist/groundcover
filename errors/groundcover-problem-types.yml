@@ -1,0 +1,68 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  live unauthenticated probes of https://api.groundcover.com and
+  https://mcp.groundcover.com/api/mcp on 2026-08-29, plus error guidance in
+  https://docs.groundcover.com/use-groundcover/remote-access-and-apis
+provider: Groundcover
+providerId: groundcover
+format: vendor-json
+rfc9457: false
+description: >-
+  groundcover publishes no error-code reference and no OpenAPI, so there are no documented 4xx/5xx
+  response schemas to derive from. What IS knowable is the envelope, which every edge response uses
+  and which was captured directly from the live hosts. This file records only errors actually
+  observed or explicitly named in the documentation — it is deliberately short rather than padded
+  with plausible HTTP statuses.
+envelope:
+  content_type: application/json
+  shape: '{"message": "<string>"}'
+  fields:
+    - name: message
+      type: string
+      description: Human-readable failure description. No machine-readable code, type URI or field-level detail accompanies it.
+  missing:
+    - No `code` or `type` field — an agent cannot branch on anything but the status and the prose.
+    - No RFC 9457 application/problem+json media type.
+    - No trace or request identifier in the body to quote in a support ticket.
+problem_types:
+  - status: 400
+    code: null
+    title: Missing Authorization header
+    message: 'Missing Authorization header'
+    method: probed
+    observed_at: https://api.groundcover.com/ (and every path under it)
+    probed: '2026-08-29'
+    meaning: >-
+      The API edge rejects any request without an Authorization header before routing. Note the
+      status: this is a 400, not a 401, and it carries no WWW-Authenticate challenge — so a client
+      that keys off 401 to trigger re-auth will not see one here.
+    remediation: >-
+      Send an Authorization header of the form "Bearer <API_KEY>".
+  - status: 401
+    code: null
+    title: Failed to validate JWT
+    message: 'Failed to validate JWT'
+    method: probed
+    observed_at: https://mcp.groundcover.com/api/mcp (POST tools/list, no credentials)
+    probed: '2026-08-29'
+    meaning: The MCP endpoint received no usable bearer token or OAuth access token.
+    remediation: >-
+      Complete the MCP OAuth flow, or send a service-account API key as a bearer token. Discovery
+      metadata is at /.well-known/oauth-protected-resource.
+  - status: 403
+    code: PERMISSION_DENIED
+    title: Permission denied
+    method: searched
+    source: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-keys
+    meaning: >-
+      The credential authenticated but its service-account RBAC policies do not permit the action or
+      the data scope. The docs call out that a spike in 403 PERMISSION_DENIED usually means a
+      revoked or expired key.
+    remediation: >-
+      Check the key has not been revoked, and that the parent service account's policies cover both
+      the action and the cluster/environment/namespace scope being touched.
+gaps:
+  - No published catalogue of validation errors for the search endpoints (malformed gcQL, bad time range).
+  - No documented status code or body for rate-limit exhaustion, despite published limits.
+  - No error taxonomy for the management endpoints (monitors, silences, pipelines, keys).

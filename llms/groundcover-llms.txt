@@ -29,6 +29,7 @@
 - [MCP Tools Reference](https://docs.groundcover.com/getting-started/groundcover-mcp/mcp-tools-reference.md)
 - [Getting-started Prompts](https://docs.groundcover.com/getting-started/groundcover-mcp/getting-started-prompts.md)
 - [Real-world Use Cases](https://docs.groundcover.com/getting-started/groundcover-mcp/real-world-use-cases.md)
+- [TCO Calculator](https://docs.groundcover.com/getting-started/tco-calculator.md)
 - [Migrations](https://docs.groundcover.com/getting-started/migrations.md)
 - [Migrate from Datadog](https://docs.groundcover.com/getting-started/migrations/migrate-from-datadog.md)
 - [Monitors](https://docs.groundcover.com/use-groundcover/monitors.md)
@@ -93,7 +94,7 @@
 - [Ingestion Keys](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/ingestion-keys.md): Secure, write‑focused credentials for streaming data into groundcover
 - [Datasource API Keys (Legacy)](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/querying-you-data-using-an-api.md)
 - [Grafana Service Account Token](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/build-alerts-and-dashboards-with-grafana-terraform-provider.md)
-- [Metrics and Logs API](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/raw-prometheus-and-clickhouse.md): This page describes the available API endpoints for querying logs and metrics in groundcover, including how to authenticate and structure requests for general data retrieval.
+- [Metrics and Logs API](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/raw-prometheus-and-clickhouse.md): This page describes the available API endpoints for querying logs, traces, Kubernetes events, and metrics in groundcover, including how to authenticate and structure requests for general data retrieva
 - [API Examples](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples.md): Welcome to the API examples section. Here, you’ll find practical demonstrations of how to interact with our API endpoints using cURL commands. Each example is designed to help you quickly understand h
 - [List Workloads](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-workloads.md): Retrieve a list of Kubernetes workloads with their performance metrics, resource usage, and metadata.
 - [List Namespaces](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/list-namespaces.md): Retrieve a list of Kubernetes namespaces within a specified time range.
@@ -114,11 +115,12 @@
 - [Create Ingestion Key](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/create-ingestion-key.md): Create a new ingestion key.
 - [Delete Ingestion Key](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/delete-ingestion-key.md): Delete an existing ingestion key. This operation permanently removes the key and cannot be undone.
 - [Query Monitors Summary](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-monitors-summary.md): Get a comprehensive list of monitor configurations with detailed execution status, alert states, performance metrics, and complete query definitions. This endpoint provides real-time monitoring data f
-- [Query Metrics](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-metrics.md): Execute PromQL queries against groundcover metrics data. Two endpoints are available: instant queries for point-in-time values and range queries for time-series data over specific periods.
-- [Query Logs](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs.md)
-- [The basics of querying logs](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs/the-basics-of-querying-logs.md)
-- [Pagination](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs/pagination.md)
-- [Advanced Log Queries](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-logs/advanced-log-queries.md)
+- [Query Data with gcQL](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-data-gcql.md): Query logs, traces, and Kubernetes events over HTTP using gcQL, groundcover's pipe-based query language. All signals share the same request structure and response format.
+- [Query Logs](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-data-gcql/query-logs.md): Search and aggregate log data over HTTP using gcQL queries - filter by any field, run full-text searches, and compute aggregations in a single request.
+- [Query Traces](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-data-gcql/query-traces.md): Search and aggregate trace spans over HTTP using gcQL queries - find failing requests, compute latency percentiles, and calculate error rates per endpoint.
+- [Query Kubernetes Events](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-data-gcql/query-events.md): Search and aggregate Kubernetes events over HTTP using gcQL queries - surface warnings, group events by reason, and track cluster activity.
+- [Query Metrics](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-metrics.md): Execute MetricsQL queries against groundcover metrics data. Two endpoints are available: instant queries for point-in-time values and range queries for time-series data over specific periods.
+- [Query APM Measurements](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/query-apm-measurements.md): Query groundcover's APM measurements (requests, errors, latency) with gcQL. Two endpoints are available: search for tabular results and search-time-series for charted results over time.
 - [groundcover Terraform Provider](https://docs.groundcover.com/use-groundcover/groundcover-terraform-provider.md)
 - [Log Patterns](https://docs.groundcover.com/use-groundcover/log-patterns.md): Log Patterns help you cut through log noise by grouping similar logs based on structure. Instead of digging through thousands of raw lines, you get a clean, high-level view of what’s actually going on
 - [Embedded Grafana](https://docs.groundcover.com/use-groundcover/embedded-grafana.md)
@@ -216,6 +218,7 @@
 - [Integrate Google Cloud Monitoring Grafana Datasource](https://docs.groundcover.com/integrations/data-sources/google-cloud-monitoring/integrate-google-cloud-monitoring-grafana-datasource.md)
 - [Adding GCP Integration with a Backend on Another Cloud Provider](https://docs.groundcover.com/integrations/data-sources/google-cloud-monitoring/adding-gcp-integration-with-a-backend-on-another-cloud-provider.md)
 - [Azure](https://docs.groundcover.com/integrations/data-sources/azure.md)
+- [Collect Azure Application Insights logs](https://docs.groundcover.com/integrations/data-sources/azure/collect-application-insights-logs.md)
 - [Ingest Azure Monitor Metrics](https://docs.groundcover.com/integrations/data-sources/azure/ingest-azure-monitor-metrics.md)
 - [DataDog](https://docs.groundcover.com/integrations/data-sources/datadog.md): Learn how to ingest DataDog generated Traces & Metrics directly into groundcover
 - [Shipping from the DataDog Agent](https://docs.groundcover.com/integrations/data-sources/datadog/shipping-from-the-datadog-agent.md)
@@ -228,6 +231,9 @@
 - [RabbitMQ Metrics](https://docs.groundcover.com/integrations/data-sources/rabbitmq/rabbitmq-metrics.md): Metrics groundcover collects from RabbitMQ.
 - [ArgoCD](https://docs.groundcover.com/integrations/data-sources/argocd.md): Collect metrics from your ArgoCD components
 - [ArgoCD Metrics](https://docs.groundcover.com/integrations/data-sources/argocd/argocd-metrics.md): Metrics groundcover collects from ArgoCD.
+- [Confluent Cloud](https://docs.groundcover.com/integrations/data-sources/confluent-cloud.md): Collect metrics from your Confluent Cloud Kafka clusters and connectors
+- [ClickHouse Database Monitoring](https://docs.groundcover.com/integrations/data-sources/clickhouse-database-monitoring.md): Monitor ClickHouse system tables as traces, and run custom SQL-based metrics
+- [PostgreSQL Database Monitoring](https://docs.groundcover.com/integrations/data-sources/postgresql-database-monitoring.md): Monitor PostgreSQL query performance as traces, and run custom SQL-based metrics
 - [FluentBit](https://docs.groundcover.com/integrations/data-sources/fluentbit.md)
 - [Fluentd](https://docs.groundcover.com/integrations/data-sources/fluentd.md)
 - [JSON Logs](https://docs.groundcover.com/integrations/data-sources/json-logs.md)

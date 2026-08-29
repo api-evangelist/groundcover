@@ -1,0 +1,168 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.groundcover.com/getting-started/groundcover-mcp/configure-groundcovers-mcp-server
+provider: Groundcover
+providerId: groundcover
+name: groundcover MCP Server
+description: >-
+  groundcover publishes a first-party hosted (remote) MCP server that brings live observability
+  data — logs, traces, Kubernetes events, live entity state, monitor issues, monitor definitions
+  and metrics — into an agent's context. It is a query-and-discovery surface: every published tool
+  reads, none write. Most tools take a gcQL pipeline; query_metrics takes PromQL.
+deployment:
+  mode: remote
+  endpoint: https://mcp.groundcover.com/api/mcp
+  auth: oauth
+  verified: probed
+  note: >-
+    OAuth is the documented default; an API key (service-account bearer token) is the alternative
+    for clients that do not speak OAuth. Self-hosted onPrem / airGapped deployments run their own
+    MCP URL. There is no stdio/npx package — the only shipped form is the hosted HTTP endpoint.
+transport: http
+status: published
+x-evidence:
+  - probe: POST https://mcp.groundcover.com/api/mcp {"jsonrpc":"2.0","id":1,"method":"tools/list"}
+    fetched: '2026-08-29'
+    http_status: 401
+    body: '{"message":"Failed to validate JWT"}'
+    conclusion: >-
+      The endpoint is live and enforces auth. tools/list is auth-gated, so the tool inventory below
+      is transcribed from groundcover's published MCP Tools Reference rather than from live
+      introspection; input schemas would need an authenticated tools/list to capture verbatim.
+  - probe: GET https://mcp.groundcover.com/.well-known/oauth-protected-resource
+    fetched: '2026-08-29'
+    http_status: 200
+    body: >-
+      {"resource":"https://mcp.groundcover.com/api/mcp","authorization_servers":["https://mcp.groundcover.com"],"bearer_methods_supported":["header"],"scopes_supported":["access:router"]}
+  - probe: GET https://mcp.groundcover.com/.well-known/oauth-authorization-server
+    fetched: '2026-08-29'
+    http_status: 200
+    conclusion: RFC 8414 metadata with dynamic client registration and PKCE S256.
+authentication:
+  methods:
+    - type: oauth2
+      recommended: true
+      flow: authorization_code
+      pkce: S256
+      dynamic_client_registration: https://mcp.groundcover.com/register-client
+      authorization_endpoint: https://mcp.groundcover.com/mcp-oauth/authorize
+      token_endpoint: https://mcp.groundcover.com/mcp-oauth/token
+      revocation_endpoint: https://auth.groundcover.com/oauth/revoke
+      scopes:
+        - access:router
+    - type: api-key
+      header: 'Authorization: Bearer <groundcover API key>'
+      note: Service-account API key; tenant is fixed by the key and a backend is auto-selected.
+  optional_headers:
+    - name: X-Tenant-UUID
+      purpose: Pin an OAuth connection to one workspace when the caller belongs to several.
+    - name: X-Backend-Id
+      purpose: Choose the backend when a tenant has more than one.
+    - name: X-Timezone
+      purpose: IANA time zone so relative time windows resolve to the caller's local time.
+install_examples:
+  - client: Cursor / generic mcp.json
+    config: '{"mcpServers":{"groundcover":{"type":"http","url":"https://mcp.groundcover.com/api/mcp"}}}'
+  - client: Claude Code
+    config: claude mcp add --transport http groundcover https://mcp.groundcover.com/api/mcp
+  - client: Codex
+    config: codex mcp add groundcover --url https://mcp.groundcover.com/api/mcp
+tools:
+  - name: list_workspaces
+    category: workspace-discovery
+    description: >-
+      List the tenants (workspaces) and their backends the authenticated caller can query. Returns
+      tenant_uuid, org_name, tenant_name and backends[]. Call first to discover routing values.
+    parameters: []
+  - name: query_logs
+    category: signal-query
+    signal: logs
+    query_language: gcQL
+    time_bound: true
+    description: Run a gcQL query against logs — errors, aggregations, latest message per group.
+    parameters: [query, start, end, period, tenant_uuid, backend_id]
+  - name: query_traces
+    category: signal-query
+    signal: traces
+    query_language: gcQL
+    time_bound: true
+    description: Run a gcQL query against trace spans — slow services, 4xx/5xx rates, spans by trace_id.
+    parameters: [query, start, end, period, tenant_uuid, backend_id]
+  - name: query_events
+    category: signal-query
+    signal: kubernetes-events
+    query_language: gcQL
+    time_bound: true
+    description: Run a gcQL query against Kubernetes events — OOMKills, crash loops, scheduling failures.
+    parameters: [query, start, end, period, tenant_uuid, backend_id]
+  - name: query_entities
+    category: signal-query
+    signal: live-entities
+    query_language: gcQL
+    time_bound: false
+    description: >-
+      Query the live state of tracked entities (Pods, Deployments, Services, Nodes and
+      non-Kubernetes entities). Current snapshot only; ignores start/end/period. The full
+      Kubernetes object surfaces through discoverable raw_json.* paths.
+    parameters: [query, tenant_uuid, backend_id]
+  - name: query_issues
+    category: signal-query
+    signal: monitor-issues
+    query_language: gcQL
+    time_bound: true
+    description: Run a gcQL query against monitor issue firings.
+    parameters: [query, start, end, period, tenant_uuid, backend_id]
+  - name: query_metrics
+    category: signal-query
+    signal: metrics
+    query_language: PromQL
+    time_bound: true
+    description: Query metrics with PromQL (four modes).
+    parameters: [tenant_uuid, backend_id]
+  - name: query_monitors
+    category: signal-query
+    signal: monitor-definitions
+    query_language: gcQL filter
+    time_bound: false
+    description: List and filter monitor definitions.
+    parameters: [tenant_uuid, backend_id]
+  - name: search_logs_metadata
+    category: metadata-discovery
+    signal: logs
+    time_bound: true
+    description: Discover log field names and values before writing a gcQL query.
+  - name: search_traces_metadata
+    category: metadata-discovery
+    signal: traces
+    time_bound: true
+    description: Discover trace field names and values.
+  - name: search_events_metadata
+    category: metadata-discovery
+    signal: kubernetes-events
+    time_bound: true
+    description: Discover Kubernetes event field names and values.
+  - name: search_metrics_metadata
+    category: metadata-discovery
+    signal: metrics
+    time_bound: true
+    description: Discover metric names and label values.
+tool_count: 12
+conventions:
+  - Every gcQL query must start with a filter expression or `*` and should end with `| limit N`.
+  - >-
+    When the row count exactly equals the effective limit the server appends a text block warning
+    that results were truncated plus a link to the gcQL reference — the agent is expected to refine
+    the query rather than paginate.
+  - Default time window is the last hour (period PT1H) when start/end/period are omitted.
+docs:
+  overview: https://docs.groundcover.com/getting-started/groundcover-mcp
+  configure: https://docs.groundcover.com/getting-started/groundcover-mcp/configure-groundcovers-mcp-server
+  tools_reference: https://docs.groundcover.com/getting-started/groundcover-mcp/mcp-tools-reference
+  prompts: https://docs.groundcover.com/getting-started/groundcover-mcp/getting-started-prompts
+  use_cases: https://docs.groundcover.com/getting-started/groundcover-mcp/real-world-use-cases
+related:
+  - name: Remote MCP Connectors
+    description: >-
+      groundcover is also an MCP *client*: Agent Mode can be allowlisted to call third-party remote
+      MCP servers. That is a consumption surface, not a groundcover-published server.
+    url: https://docs.groundcover.com/use-groundcover/connectors/mcp

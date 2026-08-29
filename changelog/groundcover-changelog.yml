@@ -1,0 +1,124 @@
+generated: '2026-08-29'
+method: searched
+source: https://www.groundcover.com/changelog
+provider: Groundcover
+providerId: groundcover
+url: https://www.groundcover.com/changelog
+description: >-
+  groundcover publishes a dated, categorised product changelog ("What's New") on its marketing site,
+  filterable by area (Dashboards, Explore, gcQL, Integrations, Kubernetes, Logs, Maps, Migrations,
+  Monitors, RUM, Settings, Synthetics, Traces). Entries are product-level release notes; they are
+  not API-versioned and do not distinguish breaking API changes from additions. API-level change
+  signal lives instead in the SDK release notes on GitHub, where the Go SDK declared its workflow
+  removal as a named breaking change.
+scheme: dated product releases, roughly biweekly, no version numbers
+cadence: biweekly
+current_version: null
+version_scheme_note: >-
+  The changelog names no release version — entries are identified by date and title only. The only
+  numbered artifacts are the SDKs, CLI and Terraform provider on GitHub.
+categories:
+  - Dashboards
+  - Explore
+  - gcQL
+  - Integrations
+  - Kubernetes
+  - Logs
+  - Maps
+  - Migrations
+  - Monitors
+  - RUM
+  - Settings
+  - Synthetics
+  - Traces
+entries:
+  - date: '2026-08-13'
+    title: 'Describe what you want, get what you need — more agent assistance and improvements to dashboards'
+    breaking: false
+    highlights:
+      - Dashboard variables that map across data sources
+      - Saved views re-appliable in one click; facets and bulk actions on long lists
+      - Agent Mode builds a monitor from a plain-English description
+      - '@mentions to scope an agent question to an exact key:value'
+      - Agent Mode accepts images as input (screenshots, dashboard sketches)
+      - groundcover links unfurl into cards in Slack
+  - date: '2026-07-30'
+    title: 'Faster, higher-quality dashboards from the agent, and an issues page built for investigation'
+    breaking: false
+    highlights:
+      - Dashboard creation through Agent Mode replaces the old create flow
+      - Issues page redesigned around alert investigation, mirrored into Slack when a monitor fires
+      - AWS cost monitoring
+      - External dashboard management improvements
+  - date: '2026-07-16'
+    title: 'Catalogs, Cost, and a More Capable Agent'
+    breaking: false
+    highlights:
+      - Dashboard catalog of pre-built dashboards previewable on your own data
+      - Agent Mode builds dashboard widgets
+      - Slack app extended for agent work in-channel
+      - AWS Cost as a first-class data source
+      - Self-serve data-retention management
+  - date: '2026-07-02'
+    title: 'Faster issue response, richer context: Slack, Linear, Monitor health, and dashboard upgrades'
+    breaking: false
+    highlights:
+      - Slack Connector routes monitor notifications and gives the agent the thread as context
+      - Linear Connector turns Monitor Issues into tickets
+      - Monitor health in the drawer; No Data state-change reasons and routing
+      - Storage Management retention control
+      - Treemap visualization in Explore and Dashboards
+  - date: '2026-06-18'
+    title: 'RUM Exception Handling and Slack Connector Updates'
+    breaking: false
+    highlights:
+      - RUM exception handling
+      - Slack integration improvements
+  - date: '2026-06-04'
+    title: 'Extend your o11y agent across your entire stack with Remote MCP Connectors'
+    breaking: false
+    highlights:
+      - Remote MCP Connectors let Agent Mode call third-party MCP servers
+      - AI Observability surface for AI workload behaviour, cost and latency
+      - Monitor and Slack setup improvements
+  - date: '2026-05-15'
+    title: 'Peace of mind for on-call engineers and building trust with your o11y agent'
+    breaking: false
+    highlights:
+      - Agent Mode approval flow for potentially dangerous actions
+      - Silences added to monitoring for scheduled maintenance
+  - date: '2026-05-08'
+    title: 'Improvements across the native pages'
+    breaking: false
+    highlights:
+      - Metric Summary and RUM pages gained deeper filtering
+      - AI Observability health signals
+  - date: '2026-04-09'
+    title: 'Polished AI Trace View & Smarter Agent Monitors'
+    breaking: false
+    highlights:
+      - AI Observability trace span tree and attributes tab
+      - Agent Mode can modify monitors directly
+  - date: '2026-04-02'
+    title: 'Agent Prompt Queue & AI Trace Views'
+    breaking: false
+    highlights:
+      - Queue prompts for the Agent without interrupting its current task
+      - Three views onto AI traces
+  - date: '2026-03-26'
+    title: 'AI Observability Page & Improved RUM Session Search'
+    breaking: false
+    highlights:
+      - Dedicated AI Observability page for LLM calls and agent workflows
+      - Improved RUM session search and triage
+api_change_signal:
+  - date: '2026-08-27'
+    source: https://github.com/groundcover-com/groundcover-sdk-go
+    version: v1.410.0
+    breaking: true
+    change: >-
+      Breaking change AI-461 — the public Go SDK removed CreateWorkflow, ListWorkflows and
+      DeleteWorkflow, dropping POST /api/workflows/create, POST /api/workflows/list and
+      DELETE /api/workflows/{id} from the supported client surface. The endpoints still answer over
+      raw REST for temporary compatibility; the migration target is Destinations + Notification
+      Routes.

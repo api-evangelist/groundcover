@@ -1,0 +1,208 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from the documented REST surface
+  (https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples), the MCP Tools
+  Reference, and the tag/model layout of the official Go SDK
+  (github.com/groundcover-com/groundcover-sdk-go v1.410.0 — 25 tag packages, 198 models).
+provider: Groundcover
+providerId: groundcover
+description: >-
+  Entity graph for the groundcover platform. Derived, not harvested: with no published OpenAPI there
+  are no $ref links to walk, so relationships come from documented request/response fields and from
+  the SDK's package layout. Relationships marked confidence low are inferred from naming and product
+  behaviour rather than from a stated field.
+domains:
+  - name: Telemetry
+    description: Ingested observability signals, queried with gcQL or PromQL. Time-bound, immutable, not addressable by id.
+    entities: [Log, Trace, Span, KubernetesEvent, Metric, RUMSession, SyntheticCheck, AITrace]
+  - name: Topology
+    description: Live state of monitored infrastructure. Snapshot, not time-series.
+    entities: [Entity, Cluster, Namespace, Workload, Deployment, Node, Pod]
+  - name: Alerting
+    description: Monitor definitions, their firings, and how firings are suppressed and routed.
+    entities: [Monitor, Issue, Silence, RecurringSilence, NotificationRoute, Destination, Workflow]
+  - name: Access
+    description: Non-human identity and authorization.
+    entities: [ServiceAccount, APIKey, IngestionKey, Policy, User]
+  - name: Presentation
+    description: Saved analysis surfaces.
+    entities: [Dashboard, DashboardRevision, SavedView, Skill]
+  - name: Pipeline
+    description: Server-side shaping of telemetry before storage.
+    entities: [LogsPipelineConfig, TracesPipelineConfig, MetricsAggregatorConfig, StorageRetentionPolicy]
+entities:
+  - name: Monitor
+    id_field: uuid
+    description: A rule evaluated against telemetry; fires Issues. Definable in YAML or SQL/gcQL.
+    endpoints:
+      - POST /api/monitors/list
+      - GET /api/monitors/{uuid}
+    fields: [id, title, type, queries, thresholds, displaySettings, evaluationParameters, labels, severity]
+  - name: Issue
+    description: A firing of a monitor, with a fingerprint used for deduplication.
+    fields: [fingerprint, alertname, status, severity, value, threshold, timestamp, labels]
+    note: Queried through the MCP query_issues tool; no documented public REST endpoint.
+  - name: Silence
+    id_field: silenceId
+    description: A one-time suppression window selecting monitors by label matchers.
+    endpoints:
+      - POST /api/monitors/silences
+      - DELETE /api/monitors/silences/{silenceId}
+    fields: [startsAt, endsAt, comment, matchers]
+  - name: Matcher
+    description: Label selector embedded in a Silence.
+    fields: [name, value, isRegex, isEqual]
+  - name: RecurringSilence
+    id_field: id
+    description: A silence on a repeating schedule (daily, weekly, monthly).
+    endpoints:
+      - GET /api/monitors/recurring-silences
+      - POST /api/monitors/recurring-silences
+      - PUT /api/monitors/recurring-silences/{id}
+      - DELETE /api/monitors/recurring-silences/{id}
+  - name: NotificationRoute
+    description: Routes issue state changes to Destinations, scoped by a gcQL expression.
+    fields: [scope, rules, destinations]
+  - name: Destination
+    description: A delivery target (Slack, PagerDuty, OpsGenie, Jira, MS Teams, generic webhook).
+  - name: Workflow
+    id_field: id
+    status: deprecated
+    description: Legacy YAML alert-handling automation, superseded by NotificationRoute + Destination.
+    endpoints:
+      - POST /api/workflows/create
+      - POST /api/workflows/list
+      - DELETE /api/workflows/{id}
+  - name: Cluster
+    description: A monitored Kubernetes cluster.
+    endpoints:
+      - POST /api/k8s/v3/clusters/list
+    fields: [name, resourceUsage, metadata, health]
+  - name: Workload
+    description: A Kubernetes workload with performance metrics, resource usage and metadata.
+    endpoints:
+      - POST /api/k8s/v3/workloads/list
+  - name: Entity
+    description: >-
+      Unified live-state record for any tracked resource, Kubernetes or not. Addressed by
+      kind + name; the underlying Kubernetes object is exposed through dotted raw_json.* paths.
+    fields: [kind, name, namespace, status, raw_json.*]
+  - name: ServiceAccount
+    description: Non-human identity for API access, governed by RBAC policies, holding multiple API keys.
+  - name: APIKey
+    description: Bearer credential bound to one service account; may be limited to a subset of its policies.
+  - name: IngestionKey
+    description: Write-only credential for sensors, integrations and browsers.
+    endpoints:
+      - POST /api/rbac/ingestion-keys/list
+      - POST /api/rbac/ingestion-keys/create
+      - POST /api/rbac/ingestion-keys/delete
+    fields: [name, type, remoteConfigurationStatus]
+  - name: Policy
+    description: RBAC unit pairing a permission level (Admin/Editor/Viewer) with a data scope.
+    fields: [permission, dataScopeMode, conditions]
+  - name: Dashboard
+    description: Saved visualization surface; every save creates a revision.
+  - name: DashboardRevision
+    description: An immutable past version of a Dashboard, previewable, exportable and restorable.
+  - name: LogsPipelineConfig
+    description: Server-side logs pipeline configuration.
+    endpoints:
+      - GET /api/pipelines/logs/config
+      - PUT /api/pipelines/logs/config
+relationships:
+  - from: ServiceAccount
+    to: APIKey
+    type: has_many
+    via: service account binding
+  - from: APIKey
+    to: Policy
+    type: has_many
+    via: inherited (optionally narrowed) from the parent service account
+    note: An API key can never exceed the permissions of its parent service account.
+  - from: User
+    to: Policy
+    type: has_many
+    via: policy assignment
+    note: Effective permission is the highest across policies; effective data scope is their union.
+  - from: Monitor
+    to: Issue
+    type: has_many
+    via: monitor evaluation
+  - from: Issue
+    to: Monitor
+    type: belongs_to
+    via: monitor_id
+  - from: Silence
+    to: Monitor
+    type: has_many
+    via: matchers (label selection, not a foreign key)
+    confidence: high
+  - from: NotificationRoute
+    to: Destination
+    type: has_many
+    via: destination selection
+  - from: NotificationRoute
+    to: Issue
+    type: has_many
+    via: gcQL scope expression
+  - from: Dashboard
+    to: DashboardRevision
+    type: has_many
+    via: save history
+  - from: Cluster
+    to: Namespace
+    type: has_many
+    via: Kubernetes hierarchy
+  - from: Namespace
+    to: Workload
+    type: has_many
+    via: Kubernetes hierarchy
+  - from: Workload
+    to: Pod
+    type: has_many
+    via: Kubernetes hierarchy
+  - from: Trace
+    to: Span
+    type: has_many
+    via: trace_id
+  - from: Log
+    to: Trace
+    type: belongs_to
+    via: traceID label
+    confidence: medium
+    note: Correlated through _from subqueries in gcQL join/union/in(), not a declared foreign key.
+  - from: Entity
+    to: Cluster
+    type: belongs_to
+    via: cluster field
+  - from: IngestionKey
+    to: Cluster
+    type: has_many
+    via: sensor deployment using the key
+    confidence: low
+identifiers:
+  - name: fingerprint
+    scope: Issue
+    description: Deduplication key for a specific issue firing.
+  - name: uuid
+    scope: Monitor
+    description: Monitor UUID, used to fetch a single monitor definition.
+  - name: tenant_uuid
+    scope: workspace
+    description: Identifies a workspace; routes MCP and multi-workspace API calls.
+  - name: backend_id
+    scope: backend
+    description: Sent as X-Backend-Id to route a request when a tenant owns more than one backend.
+  - name: trace_id
+    scope: Trace
+    description: Standard distributed-tracing identifier; groundcover speaks W3C Trace Context.
+gaps:
+  - >-
+    The Go SDK exposes 25 tag packages and 198 models, of which only the entities above are
+    documented publicly. RUM, Synthetics, AI observability, storage management, secrets,
+    integrations, connected apps, aggregations and the trace/metric pipelines all have SDK clients
+    and models with no corresponding public reference — their fields cannot be recorded without
+    fabricating them.
+  - No id-prefix scheme is published (no Stripe-style typed prefixes); ids appear as bare UUIDs.

@@ -1,0 +1,88 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.groundcover.com and https://www.groundcover.com/changelog
+provider: Groundcover
+providerId: groundcover
+description: >-
+  Versioning, deprecation and operational-transparency posture for the groundcover API. groundcover
+  runs an unusually explicit deprecation practice for a company of its size — deprecated surfaces
+  carry an in-page warning, a named successor and a step-by-step migration guide — but it publishes
+  no status page and no dated sunset commitments.
+versioning:
+  scheme: per-resource path segment (v2, v3); several management paths are unversioned
+  current:
+    logs: /api/logs/v2/search
+    traces: /api/traces/v2/search
+    kubernetes_events: /api/k8s/v2/events/search
+    kubernetes_resources: /api/k8s/v3/*
+  policy_published: false
+  note: >-
+    No document states how long a version is supported, how a new version is announced, or whether
+    breaking changes can land inside a version.
+deprecation:
+  policy_published: true
+  policy_style: per-surface notice plus migration guide (no dated sunset, no Sunset/Deprecation headers)
+  rfc8594_headers: false
+  documented_deprecations:
+    - surface: Workflows
+      endpoints:
+        - POST /api/workflows/create
+        - POST /api/workflows/list
+        - DELETE /api/workflows/{id}
+      status: deprecated
+      successor: Destinations (formerly Connected Apps) + Notification Routes
+      migration_guide: https://docs.groundcover.com/use-groundcover/workflows
+      sunset_date: not published
+      statement: >-
+        "Workflows are deprecated. We recommend migrating to Notification Routes and Destinations...
+        New features and bug fixes are only being applied to the new system."
+      client_impact: >-
+        The official Go SDK removed CreateWorkflow, ListWorkflows and DeleteWorkflow as a declared
+        breaking change (AI-461). The endpoints still answer over raw REST for compatibility.
+      soft_disable: 'Add a filter that matches nothing (e.g. key: _never_match_) to disable a workflow without deleting it.'
+    - surface: Datasource (ds) API keys / legacy ClickHouse API
+      endpoint: https://ds.groundcover.com
+      status: deprecated
+      successor: gcQL search endpoints on api.groundcover.com
+      statement: 'The following configurations are deprecated but may still be in use in older setups.'
+      docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/raw-prometheus-and-clickhouse
+      sunset_date: not published
+    - surface: Issues page (pre-Monitors)
+      status: migrated
+      successor: Monitors Issues page
+      docs: https://docs.groundcover.com/use-groundcover/monitors/migrating-from-issues-to-monitors-issues-page
+status_page:
+  published: false
+  probed:
+    - url: https://status.groundcover.com/
+      status: '000 — DNS does not resolve'
+    - url: https://groundcover.statuspage.io
+      status: 200
+      note: >-
+        Not a groundcover status page — it redirects to
+        https://www.atlassian.com/software/statuspage, the Statuspage product marketing page. The
+        subdomain is unclaimed. Recorded as a soft-404, so no StatusPage pointer is emitted.
+  probed_on: '2026-08-29'
+  note: >-
+    A BYOC vendor whose data plane runs inside the customer's own VPC has a genuinely smaller shared
+    control plane to report on, but the console, the API host and the MCP endpoint are all
+    groundcover-operated and currently have no public uptime surface.
+sla:
+  published: false
+  support_tiers_page: https://www.groundcover.com/support-plans
+  by_plan:
+    Free: Slack Community support
+    Pro: Standard support
+    Enterprise: Premium support
+    On Premise: dedicated support from the groundcover team
+  note: Support tiers are published; no numeric uptime or response-time commitment is public.
+changelog:
+  published: true
+  url: https://www.groundcover.com/changelog
+  artifact: changelog/groundcover-changelog.yml
+  cadence: roughly every two weeks
+release_channels:
+  sensor: https://github.com/groundcover-com/sensor-release
+  helm_charts: https://helm.groundcover.com
+  cli: https://github.com/groundcover-com/cli/releases
+  sdks: GitHub releases on groundcover-sdk-go / -python / -typescript, released in lockstep

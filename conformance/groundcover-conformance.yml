@@ -1,0 +1,151 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.groundcover.com (integrations, remote-access and MCP sections), live probes of
+  https://mcp.groundcover.com/.well-known/*, and https://trust.groundcover.com
+provider: Groundcover
+providerId: groundcover
+description: >-
+  Standards and cross-cutting conventions groundcover's own surfaces conform to. Observability has a
+  genuine domain standard set — OpenTelemetry for ingest and Prometheus for metrics query — and
+  groundcover conforms to both at the wire level, which is the difference between a buyer pointing
+  an existing collector at it and needing a bespoke connector. Recorded from the contract surfaces
+  themselves, not from marketing claims.
+standards:
+  - id: opentelemetry-otlp
+    name: OpenTelemetry Protocol (OTLP/HTTP)
+    domain_standard: true
+    conforms: true
+    role: ingest
+    evidence:
+      - >-
+        Documented OTEL Collector exporter configuration uses the `otlphttp/groundcover` exporter
+        with `endpoint: https://{BYOC_ENDPOINT}` and an `apikey` header — i.e. groundcover accepts
+        standard OTLP/HTTP from an unmodified OpenTelemetry Collector.
+      - source: https://docs.groundcover.com/integrations/data-sources/opentelemetry/sending-from-an-opentelemetry-collector
+      - >-
+        Separate documented paths for sending from Kubernetes pods and from standalone
+        applications, plus attribute enrichment via HTTP headers.
+    note: >-
+      The endpoint is per-tenant ({BYOC_ENDPOINT}) by architecture, not a shared collector host —
+      templated and correct, since the data plane lives in the customer's own cloud.
+  - id: prometheus-http-api
+    name: Prometheus HTTP API / PromQL
+    domain_standard: true
+    conforms: true
+    role: metrics query
+    evidence:
+      - 'Documented endpoint: https://app.groundcover.com/api/prometheus/api/v1/query'
+      - >-
+        The docs explicitly refer callers to the upstream Prometheus HTTP API documentation for the
+        complete operation set, which is a conformance claim against the standard rather than a
+        vendor API of its own.
+      - source: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/raw-prometheus-and-clickhouse
+    note: >-
+      Metric queries are PromQL/MetricsQL. Grafana can consume groundcover as a Prometheus
+      datasource, and groundcover ships a VictoriaMetrics Grafana datasource plugin.
+  - id: prometheus-exposition
+    name: Prometheus metric scraping
+    domain_standard: true
+    conforms: true
+    role: ingest
+    evidence:
+      - Documented scraping of Prometheus-format metrics from Kubernetes pods, standalone hosts and cloud hosts.
+      - source: https://docs.groundcover.com/integrations/data-sources/prometheus
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    role: agent interface
+    evidence:
+      - 'Hosted remote server: https://mcp.groundcover.com/api/mcp'
+      - 'JSON-RPC 2.0 tools/list responded HTTP 401 {"message":"Failed to validate JWT"} on 2026-08-29 — a protocol-level auth rejection, not a 404.'
+      - source: https://docs.groundcover.com/getting-started/groundcover-mcp/configure-groundcovers-mcp-server
+  - id: oauth2
+    name: OAuth 2.0 / 2.1 authorization code with PKCE
+    conforms: true
+    role: MCP authentication
+    evidence:
+      - 'https://mcp.groundcover.com/.well-known/oauth-authorization-server -> HTTP 200'
+      - 'grant_types_supported: authorization_code, refresh_token; code_challenge_methods_supported: S256'
+  - id: rfc8414
+    name: RFC 8414 — OAuth 2.0 Authorization Server Metadata
+    conforms: true
+    evidence:
+      - 'https://mcp.groundcover.com/.well-known/oauth-authorization-server -> HTTP 200, probed 2026-08-29'
+  - id: rfc9728
+    name: RFC 9728 — OAuth 2.0 Protected Resource Metadata
+    conforms: true
+    evidence:
+      - 'https://mcp.groundcover.com/.well-known/oauth-protected-resource -> HTTP 200, scopes_supported: [access:router], probed 2026-08-29'
+  - id: rfc7591
+    name: RFC 7591 — OAuth 2.0 Dynamic Client Registration
+    conforms: true
+    evidence:
+      - 'registration_endpoint: https://mcp.groundcover.com/register-client declared in the RFC 8414 metadata'
+  - id: w3c-trace-context
+    name: W3C Trace Context (traceparent)
+    conforms: true
+    role: request tracing
+    evidence:
+      - The official Go SDK sends a default traceparent header from the GC_TRACEPARENT environment variable.
+      - source: https://github.com/groundcover-com/groundcover-sdk-go
+  - id: rfc9457
+    name: RFC 9457 — Problem Details for HTTP APIs
+    conforms: false
+    evidence:
+      - 'Observed error envelope is {"message": "<string>"} with content-type application/json, not application/problem+json.'
+      - source: errors/groundcover-problem-types.yml
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence:
+      - >-
+        No public OpenAPI. Probed /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json,
+        /api-docs and /docs on api.groundcover.com (all HTTP 400 "Missing Authorization header") and
+        /openapi.json on docs.groundcover.com (HTTP 404) on 2026-08-29.
+      - >-
+        An internal OpenAPI demonstrably exists — the Go, Python and TypeScript SDKs are generated
+        from it via a private S3 artifact — so publishing it is a distribution decision, not a
+        missing description.
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence:
+      - No AsyncAPI document is published. The event surface is outbound webhooks, catalogued in asyncapi/groundcover-webhooks.yml.
+  - id: idempotency
+    name: HTTP idempotency keys
+    conforms: false
+    evidence:
+      - No idempotency header or retry-safety statement in the documentation. See conventions/groundcover-conventions.yml.
+  - id: pagination
+    name: Cursor or offset pagination
+    conforms: false
+    evidence:
+      - >-
+        Result size is bounded by a `| limit N` pipe inside the gcQL query; no cursor, page token,
+        offset or total-count field is documented on the search endpoints.
+  - id: rfc9116
+    name: RFC 9116 — security.txt
+    conforms: false
+    evidence:
+      - '/.well-known/security.txt returned 404 on www.groundcover.com, docs.groundcover.com, mcp.groundcover.com and app.groundcover.com, and 400 on api.groundcover.com (probed 2026-08-29).'
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence:
+      - '/.well-known/agent-card.json and /.well-known/agent.json returned 404 on every groundcover host probed on 2026-08-29.'
+compliance:
+  published: true
+  trust_center: https://trust.groundcover.com/
+  certifications:
+    - SOC 2
+    - ISO 27001
+    - PCI DSS
+    - HIPAA
+    - GDPR
+  source: security/groundcover-trust-center.yml
+domain_standard_summary: >-
+  groundcover's market standard is OpenTelemetry plus the Prometheus query and exposition formats,
+  and it conforms to both — an existing OTEL Collector or Grafana/Prometheus consumer integrates
+  with no bespoke connector. What it does not conform to is the API-description layer: no OpenAPI,
+  no AsyncAPI, no RFC 9457 errors.

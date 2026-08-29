@@ -1,0 +1,50 @@
+generated: '2026-08-29'
+method: searched
+source: https://www.groundcover.com/pricing and https://play.groundcover.com
+provider: Groundcover
+providerId: groundcover
+description: >-
+  groundcover offers two ways to exercise the product before buying, but neither is a developer
+  sandbox in the payments sense: there are no test-mode credentials, no test/live key prefixes, no
+  fixture data and no time simulation. The Playground is a hosted, pre-populated instance of the UI;
+  the Free plan is a real deployment against real clusters with a 12-hour retention window.
+surfaces:
+  - name: Playground
+    type: hosted-demo
+    url: https://play.groundcover.com
+    http_status: 200
+    probed: '2026-08-29'
+    signup_required: false
+    description: >-
+      A hosted instance of the groundcover console populated with demo telemetry, linked from the
+      site as "Try Playground" / "Launch Playground". Explores the UI, gcQL, dashboards and Agent
+      Mode without connecting a cluster.
+    api_access: >-
+      Not documented as an API surface. No published base URL, key issuance or endpoint for
+      programmatic access to the Playground.
+  - name: Free plan
+    type: live-tier
+    url: https://www.groundcover.com/start
+    price: $0
+    signup_required: true
+    credit_card_required: false
+    description: >-
+      Free forever, BYOC deployment mode, 12-hour data retention, Slack Community support. This is
+      the closest thing to a developer trial of the API: a free workspace can mint a service account
+      and an API key and call api.groundcover.com for real.
+    deployment_mode: BYOC
+test_credentials:
+  published: false
+  note: >-
+    No test API keys, sandbox keys, key prefixes distinguishing test from live, seeded fixture
+    objects or trigger endpoints are documented. Every key groundcover issues is a live key against
+    a real workspace, and the docs state keys are only valid for the environment that issued them.
+time_simulation:
+  supported: false
+  note: No test clocks or time-travel facility; queries run over real ingested telemetry.
+self_hosted_alternative:
+  description: >-
+    onPrem and airGapped deployments are the isolation story for regulated buyers rather than a
+    sandbox — they run their own API URL and issue their own keys, so a self-hosted environment can
+    serve as an integration target under the customer's control.
+  docs: https://docs.groundcover.com/architecture/overview

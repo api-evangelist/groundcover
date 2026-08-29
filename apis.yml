@@ -1,7 +1,15 @@
 aid: groundcover
 name: Groundcover
 description: >-
-  Groundcover is a cloud-native observability platform using eBPF for zero-instrumentation monitoring of Kubernetes workloads.
+  groundcover is a cloud-native observability platform that uses eBPF for zero-instrumentation
+  monitoring of Kubernetes and Linux workloads, covering logs, metrics, traces, Kubernetes events,
+  real user monitoring, synthetics and AI/LLM observability. Its BYOC (bring your own cloud)
+  architecture keeps the data plane inside the customer's own VPC, which lets it price per
+  monitored host rather than per ingested byte. Programmatic access is delivered through a REST
+  API at api.groundcover.com (gcQL search endpoints for logs, traces and Kubernetes events, a
+  Prometheus-compatible metrics API, and management endpoints for monitors, silences, ingestion
+  keys and pipelines), a remote MCP server at mcp.groundcover.com for agents, official Go,
+  Python and TypeScript SDKs, a CLI, and Terraform, Pulumi and Crossplane providers.
 type: Index
 deliveryModel:
   model: unknown
@@ -30,24 +38,56 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groundcove
 tags:
   - AIOps
   - Observability
+  - Kubernetes
+  - eBPF
+  - Monitoring
+  - Logs
+  - Traces
+  - Metrics
+  - OpenTelemetry
+  - MCP
 url: >-
   https://raw.githubusercontent.com/api-evangelist/groundcover/refs/heads/main/apis.yml
 created: '2026-03-27'
-modified: '2026-03-27'
+modified: '2026-08-29'
 specificationVersion: '0.23'
 apis:
   - aid: groundcover:groundcover
     name: Groundcover
     description: >-
-      Groundcover is a cloud-native observability platform using eBPF for zero-instrumentation monitoring of Kubernetes workloads.
-    humanURL: https://www.groundcover.com
+      The groundcover platform REST API. Data query endpoints run gcQL pipelines against logs
+      (POST /api/logs/v2/search), trace spans (POST /api/traces/v2/search) and Kubernetes events
+      (POST /api/k8s/v2/events/search); metrics are queried through a Prometheus-compatible API.
+      Management endpoints cover monitors, one-time and recurring silences, workflows, ingestion
+      keys, API keys, service accounts, RBAC policies, dashboards, destinations, notification
+      routes, storage management, synthetics, RUM and log/trace/metric pipelines. Authentication
+      is a service-account API key sent as a bearer token, with X-Backend-Id routing for accounts
+      that own more than one backend.
+    humanURL: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples
+    baseURL: https://api.groundcover.com
     tags:
       - AIOps
+      - Observability
+      - Kubernetes
     properties:
       - type: Documentation
-        url: https://docs.groundcover.com
+        url: https://docs.groundcover.com/use-groundcover/remote-access-and-apis
+      - type: APIReference
+        url: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples
+      - type: Authentication
+        url: authentication/groundcover-authentication.yml
+      - type: RateLimits
+        url: rate-limits/groundcover-rate-limits.yml
+      - type: ErrorCatalog
+        url: errors/groundcover-problem-types.yml
+      - type: Conventions
+        url: conventions/groundcover-conventions.yml
+      - type: DataModel
+        url: data-model/groundcover-data-model.yml
 common:
   - type: TrustCenter
+    url: security/groundcover-trust-center.yml
+  - type: Compliance
     url: security/groundcover-trust-center.yml
   - type: DomainSecurity
     url: security/groundcover-domain-security.yml
@@ -59,12 +99,68 @@ common:
     url: https://www.groundcover.com
   - type: Documentation
     url: https://docs.groundcover.com
+  - type: APIReference
+    url: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples
+  - type: GettingStarted
+    url: https://docs.groundcover.com/getting-started/5-quick-steps-to-get-you-started
+  - type: Support
+    url: https://www.groundcover.com/support-plans
+  - type: Pricing
+    url: https://www.groundcover.com/pricing
+  - type: Plans
+    url: plans/groundcover-plans-pricing.yml
+  - type: SignUp
+    url: https://www.groundcover.com/start
+  - type: Login
+    url: https://app.groundcover.com/
+  - type: TermsOfService
+    url: https://www.groundcover.com/terms
+  - type: PrivacyPolicy
+    url: https://www.groundcover.com/privacy-policy
   - type: Integrations
     url: https://www.groundcover.com/integrations
   - type: LlmsText
     url: https://docs.groundcover.com/llms.txt
+  - type: LLMsTxt
+    url: llms/groundcover-llms.txt
   - url: https://www.groundcover.com/blog
     type: Blog
+  - type: ChangeLog
+    url: changelog/groundcover-changelog.yml
+  - type: Lifecycle
+    url: lifecycle/groundcover-lifecycle.yml
+  - type: Deprecation
+    url: lifecycle/groundcover-lifecycle.yml
+  - type: MCPServer
+    url: mcp/groundcover-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/groundcover-tool-crosswalk.yml
+  - type: Packages
+    url: packages/groundcover-packages.yml
+  - type: SDKs
+    url: packages/groundcover-packages.yml
+  - type: CLI
+    url: cli/groundcover-cli.yml
+  - type: Sandbox
+    url: sandbox/groundcover-sandbox.yml
+  - type: WellKnown
+    url: well-known/groundcover-well-known.yml
+  - type: OAuthScopes
+    url: scopes/groundcover-scopes.yml
+  - type: Authentication
+    url: authentication/groundcover-authentication.yml
+  - type: Conformance
+    url: conformance/groundcover-conformance.yml
+  - type: Webhooks
+    url: asyncapi/groundcover-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/groundcover-problem-types.yml
+  - type: Conventions
+    url: conventions/groundcover-conventions.yml
+  - type: DataModel
+    url: data-model/groundcover-data-model.yml
+  - type: RateLimits
+    url: rate-limits/groundcover-rate-limits.yml
 integrations:
   - name: groundcover
   - name: Kubernetes
@@ -90,3 +186,8 @@ integrations:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v1

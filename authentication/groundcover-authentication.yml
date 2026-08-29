@@ -1,0 +1,118 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.groundcover.com/use-groundcover/remote-access-and-apis
+docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-keys
+provider: Groundcover
+providerId: groundcover
+description: >-
+  groundcover issues four distinct credential types, each scoped to a different surface. There is no
+  single "API token": a key that reads data cannot ingest it, and a key that ingests cannot read.
+  Derived from documentation rather than a spec — groundcover publishes no OpenAPI, so no
+  securitySchemes block exists to parse.
+schemes:
+  - id: api-key-bearer
+    type: http
+    scheme: bearer
+    name: API Key (service-account bearer token)
+    in: header
+    header: Authorization
+    format: 'Authorization: Bearer <YOUR_API_KEY>'
+    applies_to:
+      - https://api.groundcover.com
+      - https://mcp.groundcover.com/api/mcp
+      - Terraform / Pulumi / Crossplane providers
+      - Official Go, Python and TypeScript SDKs (env GC_API_KEY)
+    purpose: Read data and manage platform resources via REST.
+    binding: >-
+      Every API key is tied to one service account and inherits that account's RBAC policies. A key
+      may optionally be limited to a subset of those policies; it can never exceed the parent
+      service account's permissions.
+    lifecycle:
+      created_by: Admins only, in Settings -> Access -> API Keys
+      revealed: once, at creation
+      expiry: none — keys do not expire automatically
+      revocation: immediate on revoke
+    docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-keys
+  - id: ingestion-key
+    type: apiKey
+    in: header
+    header: apikey
+    name: Ingestion Key
+    applies_to:
+      - the tenant's BYOC ingestion endpoint (OTLP/HTTP and other data-source exporters)
+    purpose: Write-only — let sensors, integrations and browsers send telemetry to the backend.
+    properties:
+      permissions: write-only, plus optional remote-config read
+      revealable: always
+      lifetime: tied to the integration lifecycle
+    docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/ingestion-keys
+  - id: datasource-key
+    type: apiKey
+    in: header
+    header: X-ClickHouse-Key
+    name: Datasource (ds) API Key — LEGACY
+    applies_to:
+      - https://ds.groundcover.com
+    purpose: >-
+      Connect to groundcover as a datasource and execute SQL directly against ClickHouse /
+      VictoriaMetrics. Documented as deprecated but still present in older setups.
+    obtained_via: 'groundcover auth get-datasources-api-key'
+    deprecated: true
+    docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/querying-you-data-using-an-api
+  - id: grafana-service-account-token
+    type: apiKey
+    name: Grafana Service Account Token
+    purpose: Remotely create Grafana alerts and dashboards via the Grafana Terraform provider.
+    docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/build-alerts-and-dashboards-with-grafana-terraform-provider
+  - id: mcp-oauth
+    type: oauth2
+    name: MCP OAuth 2.1
+    flow: authorization_code
+    pkce: S256
+    dynamic_client_registration: true
+    authorization_endpoint: https://mcp.groundcover.com/mcp-oauth/authorize
+    token_endpoint: https://mcp.groundcover.com/mcp-oauth/token
+    revocation_endpoint: https://auth.groundcover.com/oauth/revoke
+    registration_endpoint: https://mcp.groundcover.com/register-client
+    token_endpoint_auth_methods_supported: [none]
+    scopes:
+      - access:router
+    applies_to:
+      - https://mcp.groundcover.com/api/mcp
+    purpose: Browser-login flow for agents connecting to the remote MCP server.
+    evidence: >-
+      RFC 8414 metadata at https://mcp.groundcover.com/.well-known/oauth-authorization-server (HTTP
+      200, probed 2026-08-29) and RFC 9728 metadata at /.well-known/oauth-protected-resource (200).
+routing_headers:
+  - name: X-Backend-Id
+    required: only for accounts associated with more than one backend
+    purpose: Route the request to the correct backend.
+    where_to_find: Settings -> Access -> API Keys tab (section header)
+  - name: X-Tenant-UUID
+    required: false
+    purpose: Pin an MCP OAuth connection to a single workspace.
+  - name: X-Timezone
+    required: false
+    purpose: IANA time zone for relative time-window resolution (MCP).
+authorization:
+  model: RBAC (policies + service accounts)
+  availability: Enterprise plan
+  permission_levels: [Admin, Editor, Viewer]
+  data_scope_modes:
+    - name: Simple
+      logic: AND across conditions, same scope for every entity type
+    - name: Advanced
+      logic: separate scope per data type (workload/infrastructure, logs, traces, events, metrics), OR within each
+  merging: >-
+    A user assigned multiple policies gets the HIGHEST permission level across them and the UNION
+    (OR) of their data scopes.
+  default_policies: [Default Admin Policy, Default Editor Policy, Default Viewer Policy]
+  docs: https://docs.groundcover.com/use-groundcover/role-based-access-control-rbac
+notes:
+  - >-
+    API keys are only valid for the environment that issued them. Self-hosted (onPrem / airGapped)
+    deployments use their own API URL and their own keys.
+  - >-
+    Documented best practices: store in a secrets manager, assign least-privilege policies, rotate
+    periodically, revoke stale keys. A spike in 403 PERMISSION_DENIED usually means a revoked or
+    expired key.

@@ -1,0 +1,68 @@
+generated: '2026-08-29'
+method: searched
+source: https://github.com/groundcover-com/cli and https://docs.groundcover.com/getting-started/installation-and-updating/connect-kubernetes-cluster
+provider: Groundcover
+providerId: groundcover
+name: groundcover
+description: >-
+  groundcover's official CLI, written in Go and open on GitHub. It is primarily a deployment and
+  credential tool rather than a data-query client: it installs and upgrades the eBPF sensor into a
+  Kubernetes cluster, and it mints and reads the credentials the rest of the platform needs. Data
+  querying happens through the REST API, the SDKs or the MCP server, not the CLI.
+repository: https://github.com/groundcover-com/cli
+latest_version: v0.22.14
+latest_release_date: '2026-04-12'
+language: go
+install:
+  - method: script
+    command: sh -c "$(curl -fsSL https://groundcover.com/install.sh)"
+    note: Grabs the latest release and installs to ~/.groundcover/bin. Unpinned — it floats to latest.
+  - method: binary
+    url: https://github.com/groundcover-com/cli/releases/latest
+    platforms: [linux/amd64, linux/arm64, darwin/amd64, darwin/arm64]
+commands:
+  - name: deploy
+    description: >-
+      Install or upgrade groundcover in a Kubernetes cluster, with auto-detection of cluster
+      incompatibilities, tolerations setup, resource tuning by cluster size and Helm overrides.
+    example: groundcover deploy -f values.yaml
+  - name: delete
+    description: Remove a groundcover deployment.
+  - name: login
+    description: Authenticate the CLI against a groundcover workspace.
+  - name: auth
+    description: Credential subcommands.
+    subcommands:
+      - name: auth get-ingestion-key
+        description: Generate or fetch an ingestion key (e.g. `groundcover auth get-ingestion-key sensor`).
+      - name: auth get-datasources-api-key
+        description: Fetch the legacy ClickHouse datasource API key.
+      - name: auth generate-client-token
+        description: Generate a client token.
+  - name: api-key
+    description: Manage service-account API keys.
+  - name: ingestion-key
+    description: Manage ingestion keys.
+  - name: service-account
+    description: Manage service accounts.
+  - name: status
+    description: Report the status of a groundcover installation.
+  - name: version
+    description: Print the CLI version.
+global_flags:
+  - --backend
+  - --tenant-uuid
+key_flows:
+  - name: Install the sensor into a cluster
+    steps:
+      - sh -c "$(curl -fsSL https://groundcover.com/install.sh)"
+      - groundcover deploy -f values.yaml
+  - name: Prepare a Helm install
+    steps:
+      - groundcover auth get-ingestion-key sensor
+      - helm repo add groundcover https://helm.groundcover.com && helm repo update groundcover
+source_note: >-
+  Command surface read from the repository's cmd/ package (api_key.go, auth.go, delete.go,
+  deploy.go, generate_client_token.go, get_datasources_api_key.go, ingestion_key.go, login.go,
+  service_account.go, status.go, version.go) and cross-checked against the install docs. Flag
+  detail beyond --backend / --tenant-uuid was not enumerated.

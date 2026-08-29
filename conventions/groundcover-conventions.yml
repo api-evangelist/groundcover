@@ -1,0 +1,207 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.groundcover.com/use-groundcover/remote-access-and-apis and the API Examples section
+  (https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples), plus live
+  probes of https://api.groundcover.com
+provider: Groundcover
+providerId: groundcover
+description: >-
+  Cross-cutting runtime semantics for the groundcover REST API. Read from the documentation and from
+  live unauthenticated probes; there is no published OpenAPI to derive from, so anything the docs do
+  not state is recorded here as not documented rather than inferred.
+base_url: https://api.groundcover.com
+alternate_hosts:
+  - host: https://app.groundcover.com
+    note: >-
+      Serves the same API; some doc examples use it, notably the Prometheus-compatible metrics path
+      /api/prometheus/api/v1/query.
+  - host: https://ds.groundcover.com
+    note: Legacy ClickHouse datasource host, deprecated.
+  - host: '{BYOC_ENDPOINT}'
+    note: >-
+      Per-tenant ingestion endpoint for OTLP and other exporters, found in the console under
+      Settings -> Ingestion Keys. Templated by design — there is no single shared ingest host.
+  - host: '{self-hosted}'
+    note: onPrem / airGapped deployments run their own API URL and issue their own keys.
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <API_KEY>'
+  routing_header: 'X-Backend-Id: <BACKEND_ID>'
+  content_type: application/json
+  see: authentication/groundcover-authentication.yml
+verbs:
+  note: >-
+    The API is POST-heavy: list and search operations take a JSON body rather than query
+    parameters (POST /api/logs/v2/search, POST /api/monitors/list, POST /api/k8s/v3/clusters/list).
+    Recurring silences use conventional REST verbs (GET/POST/PUT/DELETE on
+    /api/monitors/recurring-silences[/{id}]).
+versioning:
+  style: path-segment, per-resource
+  observed:
+    - /api/logs/v2/search
+    - /api/traces/v2/search
+    - /api/k8s/v2/events/search
+    - /api/k8s/v3/clusters/list
+    - /api/k8s/v3/workloads/list
+  note: >-
+    Versions are pinned per resource family, not globally — k8s is on v3 while logs/traces/events
+    are on v2. Several management paths (/api/monitors/*, /api/workflows/*, /api/rbac/*,
+    /api/pipelines/*) carry no version segment at all. No published deprecation window for a
+    version; see lifecycle/groundcover-lifecycle.yml.
+query_language:
+  name: gcQL
+  applies_to: [logs, traces, kubernetes-events, entities, issues, monitors]
+  shape: '<filter> | pipe1 | pipe2 ...'
+  rules:
+    - A query must start with a filter expression or `*`.
+    - Filters alone return no data — pipe to `| fields`, `| stats` or `| limit` to select output.
+    - Always end with `| limit N` to bound the result size.
+  reference: https://docs.groundcover.com/use-groundcover/querying-your-groundcover-data/groundcover-query-language/groundcover-query-language-gcql-reference
+metrics_query_language:
+  name: PromQL / MetricsQL
+  endpoint: /api/prometheus/api/v1/query
+  note: Prometheus HTTP API compatible; groundcover points users at the upstream Prometheus API docs.
+time_windows:
+  format: RFC3339 / ISO 8601
+  request_fields: [start, end]
+  required: true
+  note: >-
+    The request's start/end set the window; the `_time` field inside a gcQL query is for sub-windows
+    and offsets. The MCP tools add a relative `period` (ISO 8601 duration, default PT1H); the REST
+    search endpoints do not document one.
+pagination:
+  style: query-side limit, no cursor
+  parameter: '| limit N (inside the gcQL pipeline)'
+  documented_cursor: false
+  documented_offset: false
+  note: >-
+    There is no documented page token, cursor, offset or total-count field on the search endpoints.
+    Result size is bounded by the `limit` pipe inside the query. On MCP, when the row count exactly
+    equals the effective limit the server appends a truncation warning and expects the caller to
+    refine the query rather than paginate — which is the closest thing to a documented pagination
+    contract on this API. Some management endpoints accept a limit query parameter
+    (e.g. GET /api/monitors/recurring-silences?limit=10).
+response_shape:
+  search: A JSON array of row objects; columns depend on the query (raw fields, or group-by fields plus computed values).
+  envelope: none — search responses are bare arrays, not wrapped in a data/meta envelope.
+error_envelope:
+  shape: '{"message": "<human readable string>"}'
+  rfc9457: false
+  content_type: application/json
+  see: errors/groundcover-problem-types.yml
+rate_limit_signaling:
+  documented_limits: '150 requests/second and 1,000 requests/minute per client (per API key)'
+  identified_by: the Authorization header
+  headers_documented: false
+  status_on_exhaustion: not documented
+  note: >-
+    groundcover publishes the numbers but not the response signalling. No X-RateLimit-*,
+    RateLimit-* or Retry-After header is documented, and no status code is named for exhaustion —
+    an agent cannot detect throttling from the response contract, only by hitting it.
+  see: rate-limits/groundcover-rate-limits.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key, request-deduplication header or retry-safety statement appears anywhere in
+    the documentation. Creates (POST /api/monitors/silences, POST /api/rbac/ingestion-keys/create,
+    POST /api/workflows/create) are not documented as idempotent, so a retried create must be
+    assumed to create a second object. Recorded as absent rather than assumed present — no
+    Idempotency pointer is emitted in apis.yml.
+request_id_tracing:
+  supported: partial
+  mechanism: >-
+    The official Go SDK reads a GC_TRACEPARENT environment variable and sends it as a default
+    traceparent header (W3C Trace Context), so a caller can correlate its own request with the
+    trace. No response-side request-id header is documented.
+field_expansion:
+  mechanism: '| fields <a>, <b> pipe inside a gcQL query'
+  note: >-
+    Sparse field selection is expressed in the query language rather than as a query parameter.
+    Nested Kubernetes objects are projected through dotted raw_json.* paths
+    (raw_json.spec.containers, raw_json.metadata.*); `raw_json` itself has no scalar column.
+metadata:
+  mechanism: labels
+  note: >-
+    Monitor labels (custom labels and group-by labels) propagate into notifications as
+    labels.<name> and are the primary user-defined metadata channel.
+dry_run_mode:
+  supported: partial
+  note: >-
+    Notification Routes and Destinations can be tested before being enabled on production monitors,
+    and a generic webhook has a Test button that sets {{ status }} to "test" and fills other
+    variables with sample data. This is a UI-side rehearsal for the notification surface only; no
+    dry-run flag is documented on any REST endpoint.
+reversibility:
+  grade: documented
+  rationale: >-
+    Every documented destructive or state-changing operation has a stated reversal path, but
+    groundcover publishes no time window on any of them — no retention period for a deleted object,
+    no undo deadline, no grace period. Graded `documented` rather than `verified` for that reason.
+    No window is asserted here that the docs do not state.
+  surfaces:
+    - action: Create a one-time silence
+      operation: POST /api/monitors/silences
+      reversal: DELETE /api/monitors/silences/{silenceId}
+      window: not stated
+      note: >-
+        A silence also self-expires at its own `endsAt`, which is caller-supplied — that is a bound
+        on the effect, not a window on the reversal.
+      docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/delete-silence
+    - action: Create a recurring silence
+      operation: POST /api/monitors/recurring-silences
+      reversal: DELETE /api/monitors/recurring-silences/{id}
+      window: not stated
+      docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/recurring-silences-api
+    - action: Create an ingestion key
+      operation: POST /api/rbac/ingestion-keys/create
+      reversal: POST /api/rbac/ingestion-keys/delete
+      window: none — documented as permanent and not undoable
+      note: >-
+        The docs state deleting an ingestion key "permanently removes the key and cannot be undone".
+        This is the one operation on the documented surface that is explicitly irreversible; the
+        reversal is to issue a new key, not to restore the old one. Data stops flowing immediately.
+      docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/delete-ingestion-key
+    - action: Create an API key
+      operation: console / CLI (groundcover api-key)
+      reversal: revoke
+      window: not stated
+      note: >-
+        Revocation is immediate and irreversible in the sense that the key value is shown once and
+        cannot be recovered — a lost key must be reissued.
+      docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-keys
+    - action: Create a workflow
+      operation: POST /api/workflows/create
+      reversal: DELETE /api/workflows/{id}
+      window: not stated
+      note: >-
+        Deprecated surface. The docs also describe a soft-disable — add a filter that matches
+        nothing (e.g. `key: _never_match_`) — which reverses the effect without deleting.
+      docs: https://docs.groundcover.com/use-groundcover/workflows
+    - action: Edit a dashboard
+      operation: dashboard save (UI / Terraform provider)
+      reversal: Version History -> Restore
+      window: not stated
+      note: >-
+        The strongest reversal path on the platform. Every save creates a revision; restoring makes
+        a past revision current and creates a NEW revision on top rather than deleting anything, so
+        a restore is itself reversible. Retention of the revision list is not published.
+      docs: https://docs.groundcover.com/use-groundcover/dashboards-and-alerts/dashboard-version-history
+    - action: Update the logs pipeline configuration
+      operation: PUT /api/pipelines/logs/config
+      reversal: re-PUT a previously read configuration
+      window: not stated
+      note: >-
+        GET /api/pipelines/logs/config returns the current configuration, so a caller can snapshot
+        before writing. No server-side history or rollback endpoint is documented.
+      docs: https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples/update-logs-pipeline-configuration
+  data_retention_note: >-
+    Retention of observability data itself is a plan and storage-management setting (12 hours on
+    Free, standard on Pro, unlimited on Enterprise) — not a reversal window.
+cross_links:
+  errors: errors/groundcover-problem-types.yml
+  lifecycle: lifecycle/groundcover-lifecycle.yml
+  authentication: authentication/groundcover-authentication.yml
+  rate_limits: rate-limits/groundcover-rate-limits.yml
+  data_model: data-model/groundcover-data-model.yml

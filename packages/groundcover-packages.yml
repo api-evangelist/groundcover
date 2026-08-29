@@ -1,0 +1,150 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://github.com/groundcover-com (org repo listing) plus registry metadata from
+  registry.npmjs.org, proxy.golang.org, registry.terraform.io and the GitHub Releases API
+provider: Groundcover
+providerId: groundcover
+description: >-
+  First-party client libraries, infrastructure-as-code providers and distribution channels for the
+  groundcover platform API. The Go, Python and TypeScript SDKs are generated from groundcover's
+  internal OpenAPI description (the generator artifact is published to a private S3 bucket by each
+  repo's release workflow, so the source spec itself is not public) and are released in lockstep —
+  all three shipped on 2026-08-27.
+packages:
+  - name: "@groundcover/api-client"
+    registry: npm
+    language: javascript
+    official: true
+    kind: sdk
+    url: https://www.npmjs.com/package/@groundcover/api-client
+    repository: https://github.com/groundcover-com/groundcover-sdk-typescript
+    license: Apache-2.0
+    version: 0.12.0
+    published: '2026-08-27'
+    install: npm install @groundcover/api-client
+    note: >-
+      Official TypeScript/JavaScript SDK for the groundcover API. Generated with
+      @hey-api/openapi-ts; reads GC_API_KEY and GC_BACKEND_ID from the environment.
+  - name: "@groundcover/browser"
+    registry: npm
+    language: javascript
+    official: true
+    kind: rum-sdk
+    url: https://www.npmjs.com/package/@groundcover/browser
+    license: MIT
+    version: 1.0.9
+    published: '2026-08-20'
+    install: npm install @groundcover/browser
+    note: >-
+      Real User Monitoring (RUM) browser SDK — front-end performance and error instrumentation.
+      Not a client for the platform REST API.
+  - name: github.com/groundcover-com/groundcover-sdk-go
+    registry: go
+    language: go
+    official: true
+    kind: sdk
+    url: https://pkg.go.dev/github.com/groundcover-com/groundcover-sdk-go
+    repository: https://github.com/groundcover-com/groundcover-sdk-go
+    version: v1.410.0
+    published: '2026-08-27'
+    install: go get github.com/groundcover-com/groundcover-sdk-go
+    note: >-
+      Official Go SDK, go-swagger generated. Ships 112 operation clients across 25 tag packages
+      (agent, aggregations_metrics, apikeys, connected_apps, dashboards, ingestionkeys,
+      integrations, k8s, logs, logs_pipeline, metrics, metrics_pipeline, monitors,
+      notification_routes, policies, rbac_v2, rum, search, secret, serviceaccounts,
+      storage_management, synthetics, traces, traces_pipeline) and 198 models — the best public
+      evidence of the size of the API surface, since no OpenAPI is published.
+  - name: github.com/groundcover-com/groundcover-go
+    registry: go
+    language: go
+    official: true
+    kind: instrumentation
+    url: https://pkg.go.dev/github.com/groundcover-com/groundcover-go
+    repository: https://github.com/groundcover-com/groundcover-go
+    version: v0.2.3
+    published: '2026-07-14'
+    install: go get github.com/groundcover-com/groundcover-go
+    note: Error tracking and observability instrumentation library for Go apps, not an API client.
+  - name: groundcover (Python SDK)
+    registry: git
+    language: python
+    official: true
+    kind: sdk
+    url: https://github.com/groundcover-com/groundcover-sdk-python
+    repository: https://github.com/groundcover-com/groundcover-sdk-python
+    version: v0.52.0
+    published: '2026-08-27'
+    install: uv add "git+https://github.com/groundcover-com/groundcover-sdk-python.git"
+    note: >-
+      Official Python SDK. Distributed from GitHub only — https://pypi.org/pypi/groundcover/json
+      and https://pypi.org/pypi/groundcover-sdk/json both returned 404 on 2026-08-29, so there is
+      no PyPI release to pin. Version and date read from the repo's GitHub release tag.
+  - name: groundcover-com/groundcover (Terraform provider)
+    registry: terraform
+    language: hcl
+    official: true
+    kind: iac-provider
+    url: https://registry.terraform.io/providers/groundcover-com/groundcover
+    repository: https://github.com/groundcover-com/terraform-provider-groundcover
+    version: 1.22.3
+    published: '2026-08-17'
+    note: >-
+      Official Terraform provider — manages monitors, dashboards, policies, service accounts,
+      destinations and notification routes. Uses a groundcover API key.
+  - name: groundcover CLI
+    registry: github-releases
+    language: go
+    official: true
+    kind: cli
+    url: https://github.com/groundcover-com/cli/releases
+    repository: https://github.com/groundcover-com/cli
+    version: v0.22.14
+    published: '2026-04-12'
+    install: sh -c "$(curl -fsSL https://groundcover.com/install.sh)"
+    note: Installer script floats to the latest release; binaries are pinned per release tag.
+  - name: groundcover-com/groundcover-github-action
+    registry: github-marketplace
+    language: typescript
+    official: true
+    kind: ci-action
+    url: https://github.com/groundcover-com/groundcover-github-action
+    version: v3.0.0
+    published: '2026-04-16'
+  - name: pulumi-groundcover
+    registry: null
+    language: multi
+    official: true
+    kind: iac-provider
+    url: https://github.com/groundcover-com/pulumi-groundcover
+    version: null
+    published: null
+    note: >-
+      Official Pulumi provider repo (last pushed 2026-07-07) carries no GitHub release and no
+      tags, and no @groundcover/pulumi npm package or pulumi-groundcover PyPI package answered on
+      2026-08-29 — checked, nothing published to pin.
+  - name: crossplane-provider-groundcover
+    registry: null
+    language: go
+    official: true
+    kind: iac-provider
+    url: https://github.com/groundcover-com/crossplane-provider-groundcover
+    version: null
+    published: null
+    note: >-
+      Official Crossplane provider repo (last pushed 2026-08-05) carries no GitHub release and no
+      tags — checked, nothing published to pin.
+  - name: groundcover Helm chart
+    registry: helm
+    language: yaml
+    official: true
+    kind: chart
+    url: https://helm.groundcover.com
+    repository: https://github.com/groundcover-com/helm-charts
+    version: null
+    published: null
+    note: >-
+      Helm repo is added unpinned (`helm repo add groundcover https://helm.groundcover.com`) and
+      the docs instruct users to take the latest chart, so a consumer cannot tell which version
+      they are getting either. Chart index not queried as part of this pass.
