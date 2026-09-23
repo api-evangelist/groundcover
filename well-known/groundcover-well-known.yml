@@ -1,113 +1,129 @@
-generated: '2026-08-29'
+generated: '2026-09-19'
 method: probed
-source: live GET probes of /.well-known/* on every groundcover host in apis.yml plus the API, MCP, docs and console hosts
+source: live GET probes of /.well-known/* on every groundcover host in apis.yml plus the API, MCP, docs
+  and console hosts
 provider: Groundcover
 providerId: groundcover
-description: >-
-  Well-known document probe for groundcover. Two documents are genuinely served: the OAuth 2.0
-  Authorization Server Metadata (RFC 8414) and OAuth 2.0 Protected Resource Metadata (RFC 9728) that
-  back the remote MCP server at https://mcp.groundcover.com/api/mcp. They answer on both
-  mcp.groundcover.com and app.groundcover.com with byte-identical bodies. Everything else 404s.
-  api.groundcover.com is not a 404 host: its edge rejects every unauthenticated request, including
-  /.well-known/*, with HTTP 400 {"message":"Missing Authorization header"} — so no well-known
-  document can be read there anonymously. www.groundcover.com answers every /.well-known/* path with
-  an HTML page reading "Invalid .well-known request" under a 404; docs.groundcover.com (GitBook)
-  answers with its 404 SPA shell.
+description: 'Well-known document probe for groundcover. Two documents are genuinely served: the OAuth
+  2.0 Authorization Server Metadata (RFC 8414) and OAuth 2.0 Protected Resource Metadata (RFC 9728) that
+  back the remote MCP server at https://mcp.groundcover.com/api/mcp. They answer on both mcp.groundcover.com
+  and app.groundcover.com with byte-identical bodies. Everything else 404s. api.groundcover.com is not
+  a 404 host: its edge rejects every unauthenticated request, including /.well-known/*, with HTTP 400
+  {"message":"Missing Authorization header"} — so no well-known document can be read there anonymously.
+  www.groundcover.com answers every /.well-known/* path with an HTML page reading "Invalid .well-known
+  request" under a 404; docs.groundcover.com (GitBook) answers with its 404 SPA shell.'
 hosts:
-  - host: mcp.groundcover.com
-    documents:
-      - path: /.well-known/oauth-authorization-server
-        status: 200
-        file: groundcover-mcp-oauth-authorization-server.json
-      - path: /.well-known/oauth-protected-resource
-        status: 200
-        file: groundcover-mcp-oauth-protected-resource.json
-      - path: /.well-known/oauth-protected-resource/api/mcp
-        status: 200
-        file: groundcover-mcp-oauth-protected-resource.json
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: app.groundcover.com
-    documents:
-      - path: /.well-known/oauth-authorization-server
-        status: 200
-        file: groundcover-app-oauth-authorization-server.json
-      - path: /.well-known/oauth-protected-resource
-        status: 200
-        file: groundcover-app-oauth-protected-resource.json
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: www.groundcover.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/oauth-protected-resource
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: api.groundcover.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 400
-      - path: /.well-known/openid-configuration
-        status: 400
-      - path: /.well-known/oauth-authorization-server
-        status: 400
-      - path: /.well-known/oauth-protected-resource
-        status: 400
-      - path: /.well-known/api-catalog
-        status: 400
-      - path: /.well-known/ai-plugin.json
-        status: 400
-      - path: /.well-known/agent-card.json
-        status: 400
-      - path: /.well-known/agent.json
-        status: 400
-  - host: docs.groundcover.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/oauth-protected-resource
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
+- host: mcp.groundcover.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: groundcover-mcp-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: groundcover-mcp-oauth-protected-resource.json
+  - path: /.well-known/oauth-protected-resource/api/mcp
+    status: 200
+    file: groundcover-mcp-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  path_echo_control: passed
+- host: app.groundcover.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: groundcover-app-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: groundcover-app-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.groundcover.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api.groundcover.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 400
+  - path: /.well-known/openid-configuration
+    status: 400
+  - path: /.well-known/oauth-authorization-server
+    status: 400
+  - path: /.well-known/oauth-protected-resource
+    status: 400
+  - path: /.well-known/api-catalog
+    status: 400
+  - path: /.well-known/ai-plugin.json
+    status: 400
+  - path: /.well-known/agent-card.json
+    status: 400
+  - path: /.well-known/agent.json
+    status: 400
+- host: docs.groundcover.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.groundcover.com
+    path: /.well-known/oauth-protected-resource
+    file: groundcover-mcp-oauth-protected-resource.json
+  - host: https://mcp.groundcover.com
+    path: /.well-known/oauth-authorization-server
+    file: groundcover-mcp-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
