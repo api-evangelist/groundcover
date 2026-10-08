@@ -135,3 +135,42 @@ api_metering:
     No plan meters API requests, and no per-tier API quota is published. The only published API
     limit is a flat per-key rate limit that the pricing page does not differentiate by tier — see
     rate-limits/groundcover-rate-limits.yml.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units:
+  - compute
+  plans:
+  - name: Free
+    access: freemium
+    model: free
+    model_how: derived
+    units:
+    - compute
+    - other
+    periods:
+    - hour
+  - name: Pro
+    access: paid
+    model: free
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Enterprise
+    access: paid
+    model: free
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: On Premise
+    access: paid
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
