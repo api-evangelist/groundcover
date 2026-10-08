@@ -88,6 +88,8 @@ apis:
       - type: DataModel
         url: data-model/groundcover-data-model.yml
 common:
+  - type: FinOps
+    url: finops/groundcover-finops.yml
   - type: TrustCenter
     url: security/groundcover-trust-center.yml
   - type: Compliance
