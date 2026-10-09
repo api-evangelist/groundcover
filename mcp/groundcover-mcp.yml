@@ -194,3 +194,18 @@ related:
   description: 'groundcover is also an MCP *client*: Agent Mode can be allowlisted to call third-party
     remote MCP servers. That is a consumption surface, not a groundcover-published server.'
   url: https://docs.groundcover.com/use-groundcover/connectors/mcp
+rfc9728:
+  endpoint: https://mcp.groundcover.com/api/mcp
+  metadata_url: https://mcp.groundcover.com/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.groundcover.com/api/mcp
+    authorization_servers:
+    - https://mcp.groundcover.com
+    scopes_supported:
+    - access:router
+    bearer_methods_supported:
+    - header
