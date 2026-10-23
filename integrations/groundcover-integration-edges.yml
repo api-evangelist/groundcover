@@ -16,6 +16,9 @@ checked:
 - https://rubygems.org/api/v1
 - opentofu/integrations/opentofu-integration-edges.yml
 - terraform/integrations/terraform-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 marketplace_apps: []
 edges:
 - partner_name: OpenTelemetry
@@ -204,6 +207,36 @@ edges:
   category: infrastructure-as-code provider registry listing
   badges:
   - Verified publisher (Terraform partner tier)
+- partner_name: pub.dev
+  partner: pub-dev
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Dart/Flutter)
+  evidence: https://pub.dev/packages/groundcover_rum
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: groundcover_rum
+      version: 0.0.1-rc.0
+      released: '2026-10-19'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/groundcover_rum
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:groundcover.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 source:
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/ecosystem/vendors.yaml
 - https://github.com/open-telemetry/opentelemetry.io/blob/main/data/registry/
