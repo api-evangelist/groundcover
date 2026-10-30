@@ -1,4 +1,4 @@
-# Groundcover (groundcover)
+# Groundcover
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,50 +64,133 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Groundcover is a cloud-native observability platform using eBPF for zero-instrumentation monitoring of Kubernetes workloads.
+groundcover is a cloud-native observability platform that uses eBPF for zero-instrumentation monitoring of Kubernetes and Linux workloads, covering logs, metrics, traces, Kubernetes events, real user monitoring, synthetics and AI/LLM observability. Its BYOC (bring your own cloud) architecture keeps the data plane inside the customer's own VPC, which lets it price per monitored host rather than per ingested byte. Programmatic access is delivered through a REST API at api.groundcover.com (gcQL search endpoints for logs, traces and Kubernetes events, a Prometheus-compatible metrics API, and management endpoints for monitors, silences, ingestion keys and pipelines), a remote MCP server at mcp.groundcover.com for agents, official Go, Python and TypeScript SDKs, a CLI, and Terraform, Pulumi and Crossplane providers.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/groundcover/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/groundcover/refs/heads/main/apis.yml)
+**Areas:** AIOps · Observability · Kubernetes · eBPF · Monitoring · Logs · Traces · Metrics · OpenTelemetry · MCP
 
-## Scope
+## Groundcover on APIs.io
 
-- **Type:** Index
+Everything profiled for Groundcover is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/groundcover/](https://apis.io/providers/groundcover/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (1)
 
-- AIOps
-- Observability
+- [Groundcover](https://apis.io/apis/groundcover/groundcover/) — The groundcover platform REST API. Data query endpoints run gcQL pipelines against logs (POST /api/logs/v2/search), trace spans (POST /api/traces/v2/search)…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-27
-- **Modified:** 2026-03-27
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Groundcover
+Event-driven and webhook contracts.
 
-Groundcover is a cloud-native observability platform using eBPF for zero-instrumentation monitoring of Kubernetes workloads.
+- [Groundcover Webhooks](https://apis.io/asyncapis/groundcover/groundcover-webhooks/)
 
-- **Human URL:** [https://www.groundcover.com](https://www.groundcover.com)
+#### MCP servers (1)
 
-#### Tags
+Model Context Protocol servers that expose the API to agents.
 
-- AIOps
+- [groundcover MCP Server](https://apis.io/servers/groundcover/groundcover-mcp-server/)
 
-#### Properties
+#### Security (3)
 
-- [Documentation](https://docs.groundcover.com)
+Authentication, trust centre, and vulnerability disclosure.
 
-## Common Properties
+- [Groundcover Authentication](https://apis.io/security/groundcover/groundcover-authentication/)
+- [Groundcover Domain Security](https://apis.io/security/groundcover/groundcover-domain-security/)
+- [Groundcover Trust Center](https://apis.io/security/groundcover/groundcover-trust-center/)
 
-- [GitHub Organization](https://github.com/groundcover-com)
-- [LinkedIn](https://www.linkedin.com/company/groundcover-com)
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Groundcover Scopes](https://apis.io/scopes/groundcover/groundcover-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Groundcover Plans Pricing](https://apis.io/plans/groundcover/groundcover-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Groundcover Rate Limits](https://apis.io/rate-limits/groundcover/groundcover-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Groundcover Finops](https://apis.io/finops/groundcover/groundcover-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.groundcover.com)
 - [Documentation](https://docs.groundcover.com)
-- [Integrations](https://www.groundcover.com/integrations)
-- [L L Ms Txt](https://docs.groundcover.com/llms.txt)
+- [Getting started](https://docs.groundcover.com/getting-started/5-quick-steps-to-get-you-started)
+- [API reference](https://docs.groundcover.com/use-groundcover/remote-access-and-apis/api-examples)
+- [Pricing](https://www.groundcover.com/pricing)
+- [Sign up](https://www.groundcover.com/start)
+- [Support](https://www.groundcover.com/support-plans)
+- [Blog](https://www.groundcover.com/blog)
+- [Terms of service](https://www.groundcover.com/terms)
+- [Privacy policy](https://www.groundcover.com/privacy-policy)
+- [GitHub](https://github.com/groundcover-com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 62.5** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 55.3 |
+| Developer ergonomics | 69.0 |
+| Access clarity | 92.1 |
+
+**Agent readiness 50.0** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 39.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/groundcover/](https://apis.io/providers/groundcover/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Groundcover: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/groundcover/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
