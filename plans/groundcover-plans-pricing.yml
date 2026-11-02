@@ -1,0 +1,93 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.groundcover.com/pricing
+sources:
+- https://www.groundcover.com/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: usage-other
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-10-28'
+  evidence: 'On Premise $50 Per host, per month Designed for high-compliance, or regulated environments
+    Deployment mode: Full On-Prem'
+  managed_tier: Pro
+published: true
+note: Pricing based on monthly average number of monitored Kubernetes/Linux hosts; monthly/yearly toggle
+  present. BYOC and full on-prem deployment modes offered; on-prem is paid, no open-source edition stated.
+plan_count: 4
+currency: USD
+plans:
+- name: Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  included_quota: 12 hour data retention, Slack Community support, BYOC deployment, no credit card required,
+    free forever
+- name: Pro
+  price_text: $30
+  price: 30
+  currency: USD
+  period: month
+  unit: Per host, per month
+  included_quota: All available integrations and data sources, SSO support, up to 30 days of logs/traces/events,
+    up to 13 months of metrics, Standard support
+- name: Enterprise
+  price_text: $35
+  price: 35
+  currency: USD
+  period: month
+  unit: Per host, per month
+  included_quota: Everything in Pro, RBAC support, Unlimited data retention, Premium support
+- name: On Premise
+  price_text: $50
+  price: 50
+  currency: USD
+  period: month
+  unit: Per host, per month
+  included_quota: Everything in Enterprise, Self-hosted data plane, Self-hosted UI, Isolated authentication
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Pro
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: On Premise
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
