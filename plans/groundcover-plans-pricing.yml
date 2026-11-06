@@ -53,12 +53,13 @@ plans:
   unit: Per host, per month
   included_quota: Everything in Enterprise, Self-hosted data plane, Self-hosted UI, Isolated authentication
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - free
   - subscription
-  units: []
+  units:
+  - period
   plans:
   - name: Free
     access: other
@@ -72,7 +73,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: Enterprise
@@ -80,7 +81,7 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
   - name: On Premise
@@ -88,6 +89,6 @@ x-canonical:
     model: subscription
     model_how: derived
     units:
-    - other
+    - period
     periods:
     - month
